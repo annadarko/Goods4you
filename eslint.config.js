@@ -6,6 +6,8 @@ import eslintReactHooks from 'eslint-plugin-react-hooks';
 import eslintReactRefresh from 'eslint-plugin-react-refresh';
 import prettierPlugin from 'eslint-plugin-prettier';
 import eslintConfigPrettier from 'eslint-config-prettier';
+import react from '@vitejs/plugin-react-swc';
+import { version } from 'typescript';
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
 export default tseslint.config(
@@ -37,6 +39,11 @@ export default tseslint.config(
   },
   {
     files: ['**/*.{ts,tsx}'],
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
     rules: {
       ...prettierPlugin.configs.recommended.rules,
       ...eslintConfigPrettier.rules,
