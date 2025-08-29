@@ -1,1 +1,1 @@
-# Goods4you
+# React + TypeScript + Vite
