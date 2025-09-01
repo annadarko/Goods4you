@@ -1,0 +1,28 @@
+.container{ 
+    width: 100vw;
+    padding:0 15px;
+    margin:0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.container_header {
+    margin: 0 auto;
+    width: 100vw;
+    height: 500px;
+    border: none;
+    background-color: #484283;
+    color: white;
+    position: relative;
+}
+
+.container__catalog {
+    width: 100vw;
+}
+
+.container__faq {
+    background-color: #484283;
+    width: 100vw;
+    max-height: 650px;
+    color: white;
+}
