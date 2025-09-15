@@ -1,4 +1,5 @@
 :root{
+    --font-sans: 'Jost', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     --main-color:#fff;
     --main-color-hover:#878787;
     --bg-color:#484283;
@@ -7,4 +8,9 @@
     --btn-bg-active:#8C2828;
     --input-bg:#F6F6F6;
     --text-input: #B2B5BB;
+    --gutter: clamp(16px, 8vw, 130px);
 }
+
+html, body {
+    font-family: var(--font-sans);
+  }

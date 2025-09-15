@@ -1,0 +1,26 @@
+.text{
+    padding:20px 50px;
+}
+
+.icon {
+    padding: 25px;
+}
+
+.small{
+    height: 62px;
+}
+
+.big{
+    padding:0 60px;
+    height: 70px;
+}
+
+.icon.small{
+    width: 50px;
+    height: 50px;
+}
+
+.icon.big{
+    width: 60px;
+    height: 60px;
+}

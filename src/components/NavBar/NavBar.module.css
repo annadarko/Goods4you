@@ -1,0 +1,60 @@
+.navbar {
+    padding: 23px 0;
+    background: var(--bg-color);
+}
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.items ul {
+    display: flex;
+    gap: 40px;
+    list-style-type: none;
+}
+
+.item a{
+    color:var(--main-color);
+}
+
+.logo a {
+    color:var(--main-color);
+    font-size:30px;
+    font-weight:600;
+    line-height:44px;
+}
+
+.item a:hover{
+    color:var(--main-color-hover);
+    text-decoration:underline;
+}
+
+.iconWrap {
+    position: relative;
+    display: inline-block; /* обёртка под иконку и бейдж */
+}
+
+.shopping_img {
+    padding-left: 6px;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.shopping_counter {
+    position: absolute;
+    bottom: 2px;
+    right: -2px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 6px;
+    width: 12px;
+    height: 12px;
+    background: var(--btn-bg);
+    font-weight: 400;
+    font-size: 8px;
+}
