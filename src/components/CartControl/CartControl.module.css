@@ -1,0 +1,7 @@
+.iconButton {
+    border-radius: 4px;
+    position: relative;
+    transition: background .2s ease;
+    cursor: pointer;
+    background: var(--btn-bg);
+}

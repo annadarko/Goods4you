@@ -1,4 +1,3 @@
-import React from "react";
 import cl from './NavBar.module.css';
 import '../../style/container.css';
 import { Link } from 'react-router-dom';

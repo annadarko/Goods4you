@@ -6,6 +6,7 @@
     --text-color:#444b58;
     --btn-bg:#F14F4F;
     --btn-bg-active:#8C2828;
+    --btn-bg-disabled: #f8afaf;
     --input-bg:#F6F6F6;
     --text-input: #B2B5BB;
     --gutter: clamp(16px, 8vw, 130px);

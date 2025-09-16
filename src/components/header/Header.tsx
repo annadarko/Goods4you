@@ -1,4 +1,3 @@
-import React from "react";
 import cl from './Header.module.css';
 import '../../style/container.css';
 import { Button } from "../UI/button";
