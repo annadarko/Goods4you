@@ -32,7 +32,7 @@
 
 .iconWrap {
     position: relative;
-    display: inline-block; /* обёртка под иконку и бейдж */
+    display: inline-block;
 }
 
 .shopping_img {
