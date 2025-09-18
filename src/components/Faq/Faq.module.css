@@ -1,0 +1,39 @@
+.faq {
+    background: var(--bg-color);
+}
+
+.faq__content {
+    padding: 60px 150px;
+}
+
+@media (max-width: 800px) {
+    .faq__content {
+        padding: 40px 100px;
+    }
+}
+
+@media (max-width: 600px) {
+    .faq__content {
+        padding: 40px 0;
+    }
+}
+
+.faq__title {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 56px;
+    color: var(--main-color);
+    padding-bottom: 20px;
+}
+
+@media (max-width: 600px) {
+    .faq__title {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 300px) {
+    .faq__title {
+        font-size: 24px;
+    }
+}
