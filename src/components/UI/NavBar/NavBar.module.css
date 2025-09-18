@@ -6,6 +6,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    position: relative;
 }
 
 .items ul {
@@ -58,3 +60,49 @@
     font-weight: 400;
     font-size: 8px;
 }
+
+.burger { 
+    display: none; 
+}
+
+@media (max-width: 1000px) {
+    .burger {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 28px; height: 20px;
+      background: transparent; border: 0; padding: 0; cursor: pointer;
+    }
+    .burger span { 
+        height: 3px; 
+        width:1 00%; 
+        background: var(--main-color); 
+        border-radius:2px; 
+    }
+  
+    .items { 
+        display: none; 
+    }
+
+    .items.open {
+      display: block;
+      position: absolute; 
+      top: 100%;            
+      right: 0;             
+      background: var(--bg-color);
+      padding: 16px;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.1);
+      z-index: 10;
+      min-width: 220px;
+    }
+  
+    .items.open ul {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 0; 
+      padding: 0; 
+      list-style: none;
+    }
+  }

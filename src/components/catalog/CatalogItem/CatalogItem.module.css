@@ -1,12 +1,50 @@
 .item {
-    max-width: 370px;
+    flex: 1 1 300px;
+    min-width: 0;
     padding-top: 48px;
 }
 
+@media (max-width: 350px) {
+    .item {
+        width: 294px;
+    }
+}
+
+@media (max-width: 330px) {
+    .item {
+        width: 280px;
+    }
+}
+
+@media (max-width: 320px) {
+    .item {
+        width: 268px;
+    }
+}
+
+@media (max-width: 300px) {
+    .item {
+        width: 252px;
+    }
+}
+
 .item__img {
+    width: 100%;
     display: block;
+    overflow: hidden;
     position: relative;
-    height: 300px;
+}
+
+.item,
+.item__content,
+.contentInfo {
+  min-width: 0; 
+}
+
+.item__img img {
+    width: 100%;
+    display: block;
+    object-fit: contain;
 }
 
 .mask {
@@ -27,7 +65,6 @@
 }
 
 .contentInfo {
-    text-wrap: nowrap;
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -40,6 +77,11 @@
     font-weight: 500;
     line-height: 20px;
     margin-bottom: 10px;
+
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .content__price {

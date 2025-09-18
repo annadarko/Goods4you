@@ -32,7 +32,6 @@ export const Header = () => {
                         </Link>
                     </div>
                 </div>
-                <span className={cl.backText}>Goods4you</span>
             </div>  
         </header>
     )
