@@ -6,7 +6,7 @@ export const Footer = () => {
         <footer className={cl.footer}>
             <div className={cl.content}>
                 <div className={cl.logo}>
-                    <Link to = '#Header'>Goods4you</Link>
+                    <Link to = '/'>Goods4you</Link>
                 </div>
                 <div className={cl.items}>
                     <ul>

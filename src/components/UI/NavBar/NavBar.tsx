@@ -13,7 +13,7 @@ export const NavBar = () => {
         <div className="container">
             <div className={cl.content}>
                 <div className={cl.logo}>
-                    <Link to="#Header">Goods4you</Link>
+                    <Link to="/">Goods4you</Link>
                 </div>
                     <button className={cl.burger} onClick={toggle} aria-expanded={open}>
                         <span/><span/><span/>

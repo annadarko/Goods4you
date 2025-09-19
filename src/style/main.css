@@ -9,6 +9,7 @@
     --btn-bg-disabled: #f8afaf;
     --input-bg:#F6F6F6;
     --text-input: #B2B5BB;
+    --text-slim: #646464;
     --gutter: clamp(16px, 8vw, 130px);
 }
 

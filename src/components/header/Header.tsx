@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 
 export const Header = () => {
     return (
-        <header className={cl.header} id='Header'>
+        <header className={cl.header}>
             <div className='container'>
                 <div className={cl.main}>
                     <div className={cl.line}/>
