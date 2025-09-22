@@ -7,7 +7,11 @@ import { Counter } from '../../UI/counter'
 import { useQuantity } from '../../../hooks/useQuantity'
 import { useState } from "react";
 
-export const CatalogItem = () => {
+interface CatalogItemProps {
+  id: number;
+}
+
+export const CatalogItem:  React.FC<CatalogItemProps> = ({ id }) => {
   const [showCounter, setShowCounter] = useState(false);
   const { quantity, increaseQuantity, decreaseQuantity } = useQuantity(() =>
     setShowCounter(false)
@@ -15,7 +19,7 @@ export const CatalogItem = () => {
 
   return (
     <div className={cl.item}>
-      <Link className={cl.item__img} to="/product">
+      <Link className={cl.item__img} to={`/product/${id}`}>
         <img src={img} alt="" />
         <div className={cl.mask}>
           <span>Show details</span>
@@ -23,7 +27,7 @@ export const CatalogItem = () => {
       </Link>
       <div className={cl.item__content}>
         <div className={cl.contentInfo}>
-          <Link className={cl.content__title} to="/product">
+          <Link className={cl.content__title} to={`/product/${id}`}>
             Essence Mascara Lash Princess
           </Link>
           <p className={cl.content__price}>$110</p>

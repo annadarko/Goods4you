@@ -58,6 +58,11 @@
     cursor: pointer;
 }
 
+.img__small:active {
+    border-radius: 4px;
+    outline: 3px solid #C4C4C4;
+}
+
 .product__wrapper {
     max-width: 520px;
     width: 100%;
@@ -87,6 +92,10 @@
     justify-content: space-between;
     gap: 10px;
     padding-top: 18px;
+}
+
+.stars {
+    height: 20px;
 }
 
 .raiting span {
@@ -264,6 +273,14 @@
     margin-right: 12px;
     margin-left: auto;
     white-space: nowrap;
+}
+
+.btn:hover {
+    background: var(--btn-bg-active);
+}
+
+.btn:disabled {
+    background: var(--btn-bg-disabled);
 }
 
 @media (max-width: 1300px) {    

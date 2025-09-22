@@ -7,7 +7,7 @@ export const PageRouter = () => {
         <div>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/product" element={<ProductPage />} />
+                <Route path="/product/:id" element={<ProductPage />} />
             </Routes>
         </div>
     )
