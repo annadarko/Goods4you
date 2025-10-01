@@ -7,11 +7,11 @@ export const Product = () => {
     return (
         <div className={cl.container}>
             <div className={cl.content}>
-            <NavBar />
-            <ProductContent />
+                <NavBar />
+                <ProductContent />
             </div>
             <div className={cl.footer}>
-            <Footer />
+                <Footer />
             </div>
         </div>
     )
