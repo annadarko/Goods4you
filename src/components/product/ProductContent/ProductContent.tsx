@@ -4,12 +4,8 @@ import img__big from '../../../image/product/product_main_photo.svg'
 import img__small from '../../../image/product/product_small_photo.svg'
 import img__stars from '../../../image/product/stars.svg'
 import { Button } from '../../UI/button'
-import { useParams } from 'react-router-dom'
 
 export const ProductContent = () => {
-
-    const {id} = useParams<{id: string}> ();
-
     return (
         <div className="container">
             <div className={cl.content}>

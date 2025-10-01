@@ -12,6 +12,7 @@ interface CatalogItemProps {
 }
 
 export const CatalogItem:  React.FC<CatalogItemProps> = ({ id }) => {
+  
   const [showCounter, setShowCounter] = useState(false);
   const { quantity, increaseQuantity, decreaseQuantity } = useQuantity(() =>
     setShowCounter(false)
