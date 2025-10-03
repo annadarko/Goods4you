@@ -18,11 +18,13 @@ export const CartItem = () => {
     }
   };
 
+    const product_id = 1;
+
     return (
         <div className={cl.item}>
                 <img src={img__cart} alt='' />
                 <div className={cl.description}>
-                    <Link to="/product" className={cl.text}>Essence Mascara Lash Princess</Link>
+                    <Link to={`/product/${product_id}`} className={cl.text}>Essence Mascara Lash Princess</Link>
                     <p className={cl.price}>$110</p>
                 </div>
             <div className={cl.controls}>
