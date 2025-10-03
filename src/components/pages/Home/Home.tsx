@@ -1,8 +1,8 @@
-import {Header} from '../../header'
-import { NavBar } from "../../UI/NavBar/NavBar";
-import { Catalog } from "../../catalog/Catalog";
-import { FAQ } from '../../Faq/Faq';
-import { Footer } from '../../UI/footer';
+import {Header} from 'components/header'
+import { NavBar } from "components/UI/NavBar";
+import { Catalog } from "components/catalog";
+import { FAQ } from 'components/Faq/';
+import { Footer } from 'components/UI/footer';
 
 
 export const Home = () => {

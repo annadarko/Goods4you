@@ -1,5 +1,5 @@
 import cl from './Faq.module.css'
-import '../../style/container.css'
+import 'style/container.css'
 import { FaqInfo } from '../FaqInfo';
 
 const info = [

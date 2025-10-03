@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
 import cl from './CatalogItem.module.css'
-import img from '../../../image/product/CatalogItem.svg'
-import icon from '../../../image/shopping_cart/Vector.svg'
-import { Button } from '../../UI/button'
-import { Counter } from '../../UI/counter'
-import { useQuantity } from '../../../hooks/useQuantity'
+import img from 'image/product/CatalogItem.svg'
+import icon from 'image/shopping_cart/Vector.svg'
+import { Button } from 'components/UI/button'
+import { Counter } from 'components/UI/counter'
+import { useQuantity } from 'hooks/useQuantity'
 import { useState } from "react";
 
 interface CatalogItemProps {

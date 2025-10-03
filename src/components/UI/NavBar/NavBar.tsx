@@ -1,8 +1,8 @@
 import cl from '../NavBar/NavBar.module.css';
-import '../../../style/container.css';
+import 'style/container.css';
 import { Link } from 'react-router-dom';
-import shopping_cart from '../../../image/shopping_cart/Vector.svg';
-import { useBurger } from '../../../hooks/useBurger';
+import shopping_cart from 'image/shopping_cart/Vector.svg';
+import { useBurger } from 'hooks/useBurger';
 
 export const NavBar = () => {
 

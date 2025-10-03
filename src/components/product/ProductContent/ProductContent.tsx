@@ -1,9 +1,9 @@
-import '../../../style/container.css'
+import 'style/container.css'
 import cl from './ProductContent.module.css'
-import img__big from '../../../image/product/product_main_photo.svg'
-import img__small from '../../../image/product/product_small_photo.svg'
-import img__stars from '../../../image/product/stars.svg'
-import { Button } from '../../UI/button'
+import img__big from 'image/product/product_main_photo.svg'
+import img__small from 'image/product/product_small_photo.svg'
+import img__stars from 'image/product/stars.svg'
+import { Button } from 'components/UI/button'
 
 export const ProductContent = () => {
     return (

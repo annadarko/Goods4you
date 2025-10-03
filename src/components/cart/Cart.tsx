@@ -1,8 +1,8 @@
-import { NavBar } from "../UI/NavBar"
-import '../../style/container.css'
+import 'style/container.css'
 import { CartItem } from "./cartitems"
 import cl from './Cart.module.css'
-import { Footer } from "../UI/footer"
+import { Footer } from "components/UI/footer"
+import { NavBar } from 'components/UI/NavBar'
 
 
 export const Cart = () => {

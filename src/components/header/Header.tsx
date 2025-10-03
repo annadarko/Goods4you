@@ -1,6 +1,6 @@
 import cl from './Header.module.css';
-import '../../style/container.css';
-import { Button } from "../UI/button";
+import 'style/container.css';
+import { Button } from "components/UI/button";
 import {Link} from 'react-router-dom';
 
 export const Header = () => {

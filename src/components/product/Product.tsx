@@ -1,5 +1,5 @@
-import { Footer } from "../UI/footer"
-import { NavBar } from "../UI/NavBar"
+import { Footer } from "components/UI/footer"
+import { NavBar } from "components/UI/NavBar"
 import { ProductContent } from "./ProductContent"
 import cl from './Product.module.css'
 

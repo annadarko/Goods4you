@@ -1,10 +1,10 @@
 import cl from './CartItems.module.css'
-import img__cart from '../../../image/product/product_small_photo.svg'
+import img__cart from 'image/product/product_small_photo.svg'
 import { Link } from 'react-router-dom'
-import { Counter } from '../../UI/counter'
 import { useState } from 'react';
-import { Button } from '../../UI/button';
-import icon from '../../../image/shopping_cart/Vector.svg'
+import { Button } from 'components/UI/button';
+import icon from 'image/shopping_cart/Vector.svg'
+import { Counter } from 'components/UI/counter';
 
 export const CartItem = () => {
 

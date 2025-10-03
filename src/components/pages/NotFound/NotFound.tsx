@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
-import { Footer } from '../../UI/footer'
-import { NavBar } from '../../UI/NavBar'
+import { Footer } from 'components/UI/footer'
+import { NavBar } from 'components/UI/NavBar'
 import cl from './NotFound.module.css'
-import '../../../style/container.css'
-import { Button } from '../../UI/button'
+import 'style/container.css'
+import { Button } from 'components/UI/button'
 
 export const NotFound = () => {
     return (

@@ -1,8 +1,8 @@
-import '../../style/container.css'
+import 'style/container.css'
 import cl from './Catalog.module.css'
-import { Input } from "../UI/Input/Input";
+import { Input } from "components/UI/Input";
 import { CatalogItem } from "./CatalogItem/CatalogItem";
-import { Button } from '../UI/button';
+import { Button } from 'components/UI/button';
 
 export const Catalog = () => {
     return (
