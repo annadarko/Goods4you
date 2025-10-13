@@ -20,17 +20,24 @@ export const NavBar = () => {
                     </button>
                 <div className={`${cl.items} ${open ? cl.open : ""}`}>
                     <ul>
-                        <li className={cl.item}><a href="#Catalog" onClick={closeMenu}>Catalog</a></li>
-                        <li className={cl.item}><a href="#FAQ" onClick={closeMenu}>FAQ</a></li>
-                        <li className={cl.item}><Link to="/cart" onClick={closeMenu}>
-                            <span>Cart</span>
-                                <span className={cl.iconWrap}>
-                                <img className={cl.shoppingImg} src = {shopping_cart} alt="" />
-                                <div className={cl.shoppingCounter}>0</div>
-                            </span>
+                        <li className={cl.item}>
+                            <Link to="/#Catalog" onClick={closeMenu}>Catalog</Link>
+                        </li>
+                        <li className={cl.item}>
+                            <Link to="/#FAQ" onClick={closeMenu}>FAQ</Link>
+                        </li>
+                        <li className={cl.item}>
+                            <Link to="/cart" onClick={closeMenu}>
+                                <span>Cart</span>
+                                    <span className={cl.iconWrap}>
+                                    <img className={cl.shoppingImg} src = {shopping_cart} alt="" />
+                                    <div className={cl.shoppingCounter}>0</div>
+                                </span>
                             </Link>
                         </li>
-                        <li className={cl.item}><a href="#" onClick={closeMenu}>Johnson Smith</a></li>
+                        <li className={cl.item}>
+                            <Link to="#" onClick={closeMenu}>Johnson Smith</Link>
+                        </li>
                     </ul>
                 </div>
             </div>

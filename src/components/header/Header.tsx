@@ -19,7 +19,7 @@ export const Header = () => {
                             and many other products at low prices
                         </p>
                     <div className={cl.btn}>
-                        <Link to="#Catalog">
+                        <Link to="/#Catalog">
                             <Button
                                 className={cl.button}
                                 view="text"
