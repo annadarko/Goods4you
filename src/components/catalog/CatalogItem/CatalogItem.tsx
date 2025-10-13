@@ -33,7 +33,16 @@ export const CatalogItem:  React.FC<CatalogItemProps> = ({ id }) => {
           </Link>
           <p className={cl.content__price}>$110</p>
         </div>
-        {!showCounter ? (
+        {showCounter ? (
+          <Counter
+            size="medium"
+            value={quantity}
+            onChange={(n) => {
+              if (n > quantity) increaseQuantity();
+              else decreaseQuantity();
+            }}
+          />
+        ) : (
           <Button
             className={cl.button}
             view="icon"
@@ -45,15 +54,6 @@ export const CatalogItem:  React.FC<CatalogItemProps> = ({ id }) => {
           >
             <img src={icon} className={cl.icon} alt="Cart" />
           </Button>
-        ) : (
-          <Counter
-            size="medium"
-            value={quantity}
-            onChange={(n) => {
-              if (n > quantity) increaseQuantity();
-              else decreaseQuantity();
-            }}
-          />
         )}
       </div>
     </div>
