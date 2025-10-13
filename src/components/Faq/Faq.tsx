@@ -21,8 +21,8 @@ export const FAQ = () => {
     return (
         <div className={cl.faq} id='FAQ'>
             <div className='container'>
-                <div className={cl.faq__content}>
-                    <h1 className={cl.faq__title}>FAQ</h1>
+                <div className={cl.faqContent}>
+                    <h1 className={cl.faqTitle}>FAQ</h1>
                     <FaqInfo info={info} />
                 </div>
             </div>

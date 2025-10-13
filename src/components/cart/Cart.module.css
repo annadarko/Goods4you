@@ -69,7 +69,7 @@
     padding-bottom: 10px;
 }
 
-.text__count {
+.textCount {
     font-weight: 400;
     font-size: 20px;
     line-height: 30px;
@@ -90,7 +90,7 @@
     flex-direction: row;
 }
 
-.text__discount {
+.textDiscount {
     font-weight: 600;
     font-size: 20px;
     line-height: 30px;
@@ -118,7 +118,7 @@
     flex-direction: row;
 }
 
-.cost__text {
+.costText {
     font-weight: 600;
     font-size: 24px;
     line-height: 36px;

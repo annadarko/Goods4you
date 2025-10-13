@@ -12,7 +12,7 @@ export const Catalog = () => {
                 <div className={cl.input}>
                     <Input />
                 </div>
-                <div className={cl.catalog__products}>
+                <div className={cl.catalogProducts}>
                     <CatalogItem id = {1}/>
                     <CatalogItem id = {2}/>
                     <CatalogItem id = {3}/>
@@ -32,7 +32,7 @@ export const Catalog = () => {
                     <CatalogItem id = {17}/>
                     <CatalogItem id = {18}/>
                 </div>
-                <div className={cl.catalog__button}>
+                <div className={cl.catalogButton}>
                     <Button className={cl.button} view='text' size='big'>
                         Show more
                     </Button>

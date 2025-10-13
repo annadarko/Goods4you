@@ -9,7 +9,7 @@
     min-height: calc(100vh - 90px);
 }
 
-.not__found {
+.notFound {
     display: flex;
     flex-direction: column;   
     justify-content: center;   

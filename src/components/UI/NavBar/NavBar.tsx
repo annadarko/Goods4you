@@ -25,8 +25,8 @@ export const NavBar = () => {
                         <li className={cl.item}><Link to="/cart" onClick={closeMenu}>
                             <span>Cart</span>
                                 <span className={cl.iconWrap}>
-                                <img className={cl.shopping_img} src = {shopping_cart} alt="" />
-                                <div className={cl.shopping_counter}>0</div>
+                                <img className={cl.shoppingImg} src = {shopping_cart} alt="" />
+                                <div className={cl.shoppingCounter}>0</div>
                             </span>
                             </Link>
                         </li>

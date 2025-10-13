@@ -33,18 +33,18 @@ export const CatalogItem:  React.FC<CatalogItemProps> = ({ id }) => {
 
   return (
     <div className={cl.item}>
-      <Link className={cl.item__img} to={`/product/${id}`}>
+      <Link className={cl.itemImg} to={`/product/${id}`}>
         <img src={img} alt="" />
         <div className={cl.mask}>
           <span>Show details</span>
         </div>
       </Link>
-      <div className={cl.item__content}>
+      <div className={cl.itemContent}>
         <div className={cl.contentInfo}>
-          <Link className={cl.content__title} to={`/product/${id}`}>
+          <Link className={cl.contentTitle} to={`/product/${id}`}>
             Essence Mascara Lash Princess
           </Link>
-          <p className={cl.content__price}>$110</p>
+          <p className={cl.contentPrice}>$110</p>
         </div>
         {showCounter ? (
           <Counter

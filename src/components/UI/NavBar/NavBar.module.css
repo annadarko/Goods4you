@@ -36,14 +36,14 @@
     display: inline-block;
 }
 
-.shopping_img {
+.shoppingImg {
     padding-left: 6px;
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;
 }
 
-.shopping_counter {
+.shoppingCounter {
     position: absolute;
     bottom: 2px;
     right: -2px;

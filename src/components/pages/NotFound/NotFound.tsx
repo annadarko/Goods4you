@@ -11,7 +11,7 @@ export const NotFound = () => {
             <div className={cl.content}>
                 <NavBar />
                 <div className='container'>
-                    <div className={cl.not__found}>
+                    <div className={cl.notFound}>
                         <h1 className={cl.title}>
                             404
                         </h1>

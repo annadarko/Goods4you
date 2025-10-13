@@ -21,20 +21,20 @@ export const Cart = () => {
                         </div>
                         <div className={cl.price}>
                             <div className={cl.count}>
-                                <p className={cl.text__count}>
+                                <p className={cl.textCount}>
                                     Total count
                                 </p>
                                 <span>3 items</span>
                             </div>
                             <div className={cl.discount}>
-                                <p className={cl.text__discount}>
+                                <p className={cl.textDiscount}>
                                     Price without discount
                                 </p>
                                 <span>$700</span>
                             </div>
                             <div className={cl.line} />
                             <div className={cl.cost}>
-                                <p className={cl.cost__text}>
+                                <p className={cl.costText}>
                                     Total price
                                 </p>
                                 <span>$590</span>

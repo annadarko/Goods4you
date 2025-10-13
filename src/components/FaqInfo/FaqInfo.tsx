@@ -33,7 +33,7 @@ export const FaqInfo: React.FC<Info> = ({ info }) => {
                 >
                   <div className={cl.main}>{faqItem.title}</div>
                   <div className={`${cl.rotate} ${isOpen ? cl.exit : ''}`}>
-                    <div className={cl.faq_info} />
+                    <div className={cl.faqInfo} />
                   </div>
                 </div>
                 <div className={`${cl.collapse} ${isOpen ? cl.open : ''}`}>

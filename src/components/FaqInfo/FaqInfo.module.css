@@ -68,7 +68,7 @@
     }
 }
 
-.faq_info::after{
+.faqInfo::after{
     content:'';
     display:block;
     border:1px solid var(--main-color);
@@ -80,7 +80,7 @@
     transform: translate(-50%,-50%);
 }
 
-.faq_info::before{
+.faqInfo::before{
     content:'';
     display:block;
     border:1px solid var(--main-color);
