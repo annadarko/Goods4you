@@ -5,7 +5,7 @@ import icon from 'image/shopping_cart/Vector.svg'
 import { Button } from 'components/UI/button'
 import { Counter } from 'components/UI/counter'
 import { useQuantity } from 'hooks/useQuantity'
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 interface CatalogItemProps {
   id: number;
@@ -17,6 +17,19 @@ export const CatalogItem:  React.FC<CatalogItemProps> = ({ id }) => {
   const { quantity, increaseQuantity, decreaseQuantity } = useQuantity(() =>
     setShowCounter(false)
   );
+
+  const handlCounterChange = useCallback ((next: number) => {
+    if (next > quantity) {
+      increaseQuantity();
+    } else {
+      decreaseQuantity();
+    }
+  }, [quantity, increaseQuantity, decreaseQuantity]);
+
+  const handleAddClick = useCallback(()=> {
+    setShowCounter (true);
+    increaseQuantity();
+  }, [increaseQuantity]);
 
   return (
     <div className={cl.item}>
@@ -37,20 +50,14 @@ export const CatalogItem:  React.FC<CatalogItemProps> = ({ id }) => {
           <Counter
             size="medium"
             value={quantity}
-            onChange={(n) => {
-              if (n > quantity) increaseQuantity();
-              else decreaseQuantity();
-            }}
+            onChange={handlCounterChange}
           />
         ) : (
           <Button
             className={cl.button}
             view="icon"
             size="small"
-            onClick={() => {
-              setShowCounter(true);
-              increaseQuantity();
-            }}
+            onClick={handleAddClick}
           >
             <img src={icon} className={cl.icon} alt="Cart" />
           </Button>
