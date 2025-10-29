@@ -1,0 +1,15 @@
+.container { 
+    display:flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.content {
+    flex: 1 0 auto;
+    min-height: calc(100vh - 90px);
+}
+
+.footer {
+    height: 90px;
+    flex: 0 0 auto;
+}

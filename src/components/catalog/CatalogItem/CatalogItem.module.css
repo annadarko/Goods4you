@@ -1,0 +1,127 @@
+.item {
+    flex: 1 1 300px;
+    min-width: 0;
+    padding-top: 48px;
+}
+
+@media (max-width: 350px) {
+    .item {
+        width: 294px;
+    }
+}
+
+@media (max-width: 330px) {
+    .item {
+        width: 280px;
+    }
+}
+
+@media (max-width: 320px) {
+    .item {
+        width: 268px;
+    }
+}
+
+@media (max-width: 300px) {
+    .item {
+        width: 252px;
+    }
+}
+
+.itemImg {
+    width: 100%;
+    display: block;
+    overflow: hidden;
+    position: relative;
+}
+
+.item,
+.itemContent,
+.contentInfo {
+  min-width: 0; 
+}
+
+.itemImg img {
+    width: 100%;
+    display: block;
+    object-fit: contain;
+}
+
+.mask {
+    position: absolute;
+    background: rgb(0 0 0 / 25%);
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    inset: 0;
+}
+
+.itemContent {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+    color: var(--text-color);
+    position: relative;
+}
+
+.contentInfo {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.contentTitle {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 20px;
+    margin-bottom: 10px;
+
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.contentPrice {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    color: var(--text-color);
+}
+
+.mask:hover {
+    opacity: 1;
+}
+
+.mask span {
+    color: var(--main-color);
+    font-size: 26px;
+    line-height: 38px;
+    font-weight: 800;
+    opacity: 0.6;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.button {
+    border-radius: 4px;
+    position: relative;
+    transition: background .2s ease;
+    cursor: pointer;
+    background: var(--btn-bg);
+}
+
+.icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.button:hover {
+    background: var(--btn-bg-active);
+}

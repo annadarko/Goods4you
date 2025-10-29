@@ -1,0 +1,39 @@
+.faq {
+    background: var(--bg-color);
+}
+
+.faqContent {
+    padding: 60px 150px;
+}
+
+@media (max-width: 800px) {
+    .faqContent {
+        padding: 40px 100px;
+    }
+}
+
+@media (max-width: 600px) {
+    .faqContent {
+        padding: 40px 0;
+    }
+}
+
+.faqTitle {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 56px;
+    color: var(--main-color);
+    padding-bottom: 20px;
+}
+
+@media (max-width: 600px) {
+    .faqTitle {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 300px) {
+    .faqTitle {
+        font-size: 24px;
+    }
+}

@@ -1,0 +1,153 @@
+.header {
+    background: var(--bg-color);
+}
+
+.button{
+    background:var(--btn-bg);
+    border-radius:4px;
+    transition:background .2s ease;
+    cursor:pointer;
+}
+
+.btnSpan{
+    color:var(--main-color);
+    line-height:22px;
+    font-size:16px;
+    font-weight:400;
+}
+
+.button:hover{
+    background:var(--btn-bg-active);
+}
+
+.main{
+    position: relative;
+    z-index: 2;
+}
+
+.main::before {
+
+    content: "Goods4you";
+    position: absolute;
+    inset-inline: var(--gutter, 15px);
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    color: var(--main-color);
+    opacity: 0.12;
+    z-index: -1;
+    font-weight: 700;
+    white-space: nowrap;
+    font-size: 200px;
+    /* font-size: clamp(64px, 12vw, 200px);  */
+}
+
+@media (max-width: 1280px) {
+    .main::before {
+        font-size: 150px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .main::before {
+        font-size: 120px;
+    }
+}
+
+@media (max-width: 800px) {
+    .main::before {
+        font-size: 90px;
+    }
+}
+
+@media (max-width: 600px) {
+    .main::before {
+        font-size: 58px;
+    }
+}
+
+@media (max-width: 341px) {
+    .main::before {
+        font-size: 50px;
+    }
+}
+
+@media (max-width: 300px) {
+    .main::before {
+        font-size: 46px;
+    }
+}
+
+.line{
+    height: 1px;
+    background:white;
+}
+
+.mainText{
+    margin-top:115px;
+    font-size: 36px;
+    text-align:left;
+    line-height:50px;
+    color:var(--main-color);
+    font-weight: 400;
+}
+
+@media (max-width: 800px) {
+    .mainText {
+        margin-top: 80px;
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 600px) {
+    .mainText {
+        margin-top: 60px;
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 300px) {
+    .mainText {
+        margin-top: 40px;
+        font-size: 32px;
+    }
+}
+
+.text{
+    margin-top:30px;
+    text-align:left;
+    color:var(--main-color);
+    line-height:24px;
+    font-weight:600;
+    font-size:16px;
+}
+
+@media (max-width: 800px) {
+    .text {
+        margin-top: 20px;
+    }
+}
+
+.btn{
+    padding:30px 0 115px;
+}
+
+@media (max-width: 800px) {
+    .btn {
+        padding:30px 0 80px;;
+    }
+}
+
+@media (max-width: 600px) {
+    .btn {
+        padding:30px 0 60px;;
+    }
+}
+
+@media (max-width: 300px) {
+    .btn {
+        padding:30px 0 40px;;
+    }
+}

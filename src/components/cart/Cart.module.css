@@ -1,0 +1,133 @@
+.container {
+    display:flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.content {
+    flex: 1 0 auto;
+    min-height: calc(100vh - 90px);
+}
+
+.title {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 56px;
+    color: var(--text-color);
+    padding: 48px 0;
+}
+
+.cart {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 48px;
+    padding-bottom: 92px;
+}
+
+@media (max-width: 1000px) {
+    .cart {
+        flex-direction: column;     
+        align-items: center;        
+    }
+}
+
+.form {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    border: 1px solid #c4c4c4;
+    border-radius: 4px;
+    gap: 10px;
+    padding: 20px 40px;
+    width: 776px;
+}
+
+@media (max-width: 1000px) {
+    .form {
+        width: 100%;                
+        max-width: 776px;           
+    }
+}
+
+.price {
+    width: 356px;
+}
+
+@media (max-width: 1000px) {
+    .price {
+        width: 100%;                
+    }
+}
+
+.count {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    padding-bottom: 10px;
+}
+
+.textCount {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+    color: var(--text-input);
+}
+
+.count span {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+    color: var(--text-color);
+}
+
+.discount {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.textDiscount {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 30px;
+    color: var(--text-input);
+}
+
+.discount span {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    color: var(--text-color);
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    background:#E5E5E5;
+    margin:20px 0 10px;
+}
+
+.cost {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.costText {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 36px;
+    color: var(--text-input);
+}
+
+.cost span {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+    color: var(--text-color);
+}
