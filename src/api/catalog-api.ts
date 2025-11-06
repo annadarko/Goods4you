@@ -1,20 +1,17 @@
 import axiosBase from "./axiosBase";
-
-export type SearchResponse = {
-    products: Array<{id: number; title: string; price: number}>;
-    total: number;
-    skip: number;
-    limit: number;
-};
+import { Product } from "models/Product";
 
 export const fetchCatalogProducts = async (
     query: string = '',
     skip: number = 0,
     limit: number = 12
-) => {
-    const {data} = await axiosBase.get<SearchResponse>('/products/search', {
-        params: {q: query, skip, limit},
+) : Promise<Product[]> => {
+    const response = await axiosBase.get<Product[]>(`/products/search`, {
+        params: {
+            q: query,
+            skip: skip,
+            limit: limit,
+        },
     });
-    return data;
+    return response.data;
 };
-

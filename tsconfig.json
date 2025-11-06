@@ -19,6 +19,9 @@
       "hooks/*": ["hooks/*"],
       "image/*": ["image/*"],
       "style/*": ["style/*"],
+      "store/*": ["store/*"],
+      "api/*": ["api/*"],
+      "models/*": ["models/*"],
     },
 
     /* Linting */
