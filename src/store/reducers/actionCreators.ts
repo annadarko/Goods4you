@@ -5,8 +5,14 @@ import { fetchCartsByUsers } from "api/user-api";
 import { Product } from "models/Product";
 import { User } from "models/User";
 
+type ProductsData = {
+  products: Product[];
+  skip: number;
+  total: number;
+};
+
 export const fetchCatalogProduct = createAsyncThunk<
-  Product[],
+  ProductsData,
   { q: string; skip: number },
   { rejectValue: string }
 >("catalogData/fetchCatalogProducts", async ({ q, skip }, { rejectWithValue }) => {
