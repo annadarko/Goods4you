@@ -22,6 +22,7 @@
       "store/*": ["store/*"],
       "api/*": ["api/*"],
       "models/*": ["models/*"],
+      "utils/*": ["utils/*"],
     },
 
     /* Linting */

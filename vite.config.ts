@@ -14,6 +14,7 @@ export default defineConfig({
             store: "/src/store",
             api: "/src/api",
             models: "/src/models",
+            utils: "/src/utils",
         }
     },
 });

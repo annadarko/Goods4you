@@ -1,17 +1,22 @@
 import { Link } from 'react-router-dom'
 import cl from './CatalogItem.module.css'
-import img from 'image/product/CatalogItem.svg'
 import icon from 'image/shopping_cart/Vector.svg'
 import { Button } from 'components/UI/button'
 import { Counter } from 'components/UI/counter'
 import { useQuantity } from 'hooks/useQuantity'
 import { useCallback, useState } from "react";
+import { calcDiscounted } from 'utils/price'
 
 interface CatalogItemProps {
   id: number;
+
+  title: string;
+  price: number;
+  discountPercentage: number;
+  thumbnail: string;
 }
 
-export const CatalogItem:  React.FC<CatalogItemProps> = ({ id }) => {
+export const CatalogItem:  React.FC<CatalogItemProps> = ({ id, title, price, discountPercentage, thumbnail }) => {
   
   const [showCounter, setShowCounter] = useState(false);
   const { quantity, increaseQuantity, decreaseQuantity } = useQuantity(() =>
@@ -31,10 +36,12 @@ export const CatalogItem:  React.FC<CatalogItemProps> = ({ id }) => {
     increaseQuantity();
   }, [increaseQuantity]);
 
+  const discounted = calcDiscounted(price, discountPercentage);
+
   return (
     <div className={cl.item}>
       <Link className={cl.itemImg} to={`/product/${id}`}>
-        <img src={img} alt="" />
+        <img src={thumbnail} alt={title} />
         <div className={cl.mask}>
           <span>Show details</span>
         </div>
@@ -42,9 +49,9 @@ export const CatalogItem:  React.FC<CatalogItemProps> = ({ id }) => {
       <div className={cl.itemContent}>
         <div className={cl.contentInfo}>
           <Link className={cl.contentTitle} to={`/product/${id}`}>
-            Essence Mascara Lash Princess
+            {title}
           </Link>
-          <p className={cl.contentPrice}>$110</p>
+          <p className={cl.contentPrice}>${discounted}</p>
         </div>
         {showCounter ? (
           <Counter
