@@ -1,6 +1,11 @@
 import axiosBase from "./axiosBase";
+import { User } from "models/User";
 
-export const fetchCartsByUsers = async (id: number) => {
-    const response = await axiosBase.get(`/carts/user/${id}`, {});
+export interface CartsData {
+    carts: User[];
+}
+
+export const fetchCartsByUsers = async (id: number): Promise<CartsData> => {
+    const response = await axiosBase.get<CartsData>(`/carts/user/${id}`, {});
     return response.data;
 };

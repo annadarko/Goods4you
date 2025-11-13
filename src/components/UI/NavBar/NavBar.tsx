@@ -3,10 +3,28 @@ import 'style/container.css';
 import { Link } from 'react-router-dom';
 import shopping_cart from 'image/shopping_cart/Vector.svg';
 import { useBurger } from 'hooks/useBurger';
+import { useRef, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { fetchCartsByUser } from 'store/reducers/actionCreators';
+import { selectCartTotalQuantity, selectShowBadge } from 'store/reducers/userSlice';
 
 export const NavBar = () => {
 
     const { open, toggle, closeMenu } = useBurger();
+    const dispatch = useAppDispatch();
+
+    const didFetchRef = useRef (false);
+
+    useEffect(() => {
+        if (didFetchRef.current) return;
+        didFetchRef.current = true;
+        dispatch(fetchCartsByUser({ id: 87 }));
+    }, [dispatch]);
+
+    const totalQty = useAppSelector(selectCartTotalQuantity);
+    const showBadge = useAppSelector(selectShowBadge);
+
+    const username = 'Johnson Smith';
 
     return (
         <div className={cl.navbar}>
@@ -31,12 +49,14 @@ export const NavBar = () => {
                                 <span>Cart</span>
                                     <span className={cl.iconWrap}>
                                     <img className={cl.shoppingImg} src = {shopping_cart} alt="" />
-                                    <div className={cl.shoppingCounter}>0</div>
+                                    {showBadge && (
+                                        <div className={cl.shoppingCounter}>{totalQty}</div>
+                                    )}
                                 </span>
                             </Link>
                         </li>
                         <li className={cl.item}>
-                            <Link to="#" onClick={closeMenu}>Johnson Smith</Link>
+                            <Link to="#" onClick={closeMenu}>{username}</Link>
                         </li>
                     </ul>
                 </div>

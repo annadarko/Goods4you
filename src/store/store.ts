@@ -1,19 +1,17 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import catalogProductSlice from "./reducers/catalogProducteSlice";
 import userSlice from "./reducers/userSlice";
-import productInfoSlice from "./reducers/productInfoSlice";
+import { dummyApi } from "api/dummyApi";
 
 const rootReducer = combineReducers({
-    catalogProductSlice,
+    [dummyApi.reducerPath]: dummyApi.reducer,
     userSlice,
-    productInfoSlice,
-});
+})
 
-export const setupStore = () => {
-    return configureStore({
-        reducer: rootReducer,
-    });
-};
+export const setupStore = () => configureStore({
+    reducer: rootReducer,
+    middleware: (getDeault) => getDeault().concat(dummyApi.middleware),
+    devTools: true
+});
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;

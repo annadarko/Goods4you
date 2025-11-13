@@ -6,7 +6,7 @@ export interface Product {
     description: string;
     discountPercentage: number;
     stock: number;
-    quantity?: number;
-    warrantyInformation?: string;
-    shippingInformation?: string;
+    quantity: number;
+    warrantyInformation: string;
+    shippingInformation: string;
 }

@@ -1,10 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "models/User";
 import { fetchCartsByUser } from "./actionCreators";
-
-interface CartsData {
-  carts: User[];
-}
+import type { CartsData } from "api/user-api";
 
 interface InitialState {
   user: CartsData;
@@ -12,18 +8,14 @@ interface InitialState {
   error: string;
 }
 
-const cartsData: CartsData = {
-  carts: [],
-};
-
 const initialState: InitialState = {
-  user: cartsData,
+  user: {carts: []},
   isLoading: false,
   error: "",
 };
 
 export const userSlice = createSlice({
-  name: "carts",
+  name: "userSlice",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -48,8 +40,16 @@ export const userSlice = createSlice({
       );
   },
   selectors: {
-    selectValue: (state) => state.user.carts[0],
+    selectFirstCart: (state) => state.user.carts[0] ?? null,
+    selectCartTotalQuantity: (state) => state.user.carts[0]?.totalQuantity ?? 0,
+    selectShowBadge: (state) => (state.user.carts[0]?.totalQuantity ?? 0) > 0,
   },
 });
+
+export const {
+  selectFirstCart,
+  selectCartTotalQuantity,
+  selectShowBadge,
+} = userSlice.selectors;
 
 export default userSlice.reducer;

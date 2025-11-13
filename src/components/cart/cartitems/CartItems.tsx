@@ -1,67 +1,33 @@
 import cl from './CartItems.module.css'
-import img__cart from 'image/product/product_small_photo.svg'
 import { Link } from 'react-router-dom'
-import { useCallback, useState } from 'react';
-import { Button } from 'components/UI/button';
-import icon from 'image/shopping_cart/Vector.svg'
-import { Counter } from 'components/UI/counter';
+import { calcDiscounted } from 'utils/price';
 
-export const CartItem = () => {
-
-    const [count, setCount] = useState<number>(1);
-    const [isDeleted, setIsDeleted] = useState<boolean>(false);
-
-    const product_id = 1;
-
-    const handleCounterChange = useCallback ((next: number) => {
-        setCount(next);
-        if (next === 0) {
-            setIsDeleted(true);
-        }
-    }, []);
-
-    const handleDeleteClick = useCallback (() => {
-        setIsDeleted (true);
-        setCount(0);
-    }, []);
-
-    const handleRestoreClick = useCallback (() => {
-        setIsDeleted (false);
-        setCount(1);
-    }, []);
-
-    return (
-        <div className={cl.item}>
-                <img src={img__cart} alt='' />
-                <div className={cl.description}>
-                    <Link to={`/product/${product_id}`} className={cl.text}>Essence Mascara Lash Princess</Link>
-                    <p className={cl.price}>$110</p>
-                </div>
-            <div className={cl.controls}>
-            {isDeleted ? (
-          <Button
-            className={cl.button}
-            view="icon"
-            onClick={handleRestoreClick}
-          >
-            <img src={icon} alt="" className={cl.icon} />
-          </Button>
-        ) : (
-          <>
-            <Counter
-              size="medium"
-              value={count}
-              onChange={handleCounterChange}
-            />
-            <span
-              className={cl.delete}
-              onClick={handleDeleteClick}
-            >
-              Delete
-            </span>
-          </>
-        )}
-            </div>
-        </div>
-    )
+interface CartItemProps {
+  id: number;
+  title: string;
+  thumbnail: string;
+  price: number;
+  discountPercentage: number;
+  quantity: number;
 }
+
+export const CartItem: React.FC<CartItemProps> = ({
+  id, title, thumbnail, price, discountPercentage, quantity
+}) => {
+  const discounted = calcDiscounted(price, discountPercentage);
+
+  return (
+    <div className={cl.item}>
+      <img src={thumbnail} alt={title} />
+      <div className={cl.description}>
+        <Link to={`/product/${id}`} className={cl.text}>{title}</Link>
+        <p className={cl.price}>${discounted} × {quantity}</p>
+      </div>
+
+      {/* справа просто суммарно по позиции */}
+      <div className={cl.controls}>
+        <span className={cl.sum}>${(discounted * quantity).toFixed(2)}</span>
+      </div>
+    </div>
+  );
+};

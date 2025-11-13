@@ -1,21 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from 'react';
 
-export const useQuantity = (onResetToCart: () => void) => {
-  const [quantity, setQuantity] = useState(0);
+export const useQuantity = (onZero?: () => void, initial: number = 0) => {
+  const [quantity, setQuantity] = useState(initial);
 
-  const increaseQuantity = () => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
-  };
+  const increaseQuantity = () => setQuantity(q => q + 1);
 
-  const decreaseQuantity = () => {
-    setQuantity((prevQuantity) => {
-      const newQuantity = prevQuantity > 1 ? prevQuantity - 1 : 0;
-      if (newQuantity === 0) {
-        onResetToCart();
+  const decreaseQuantity = () =>
+    setQuantity(q => {
+      const next = q - 1;
+      if (next <= 0) {
+        onZero?.();
+        return 0;
       }
-      return newQuantity;
+      return next;
     });
-  };
+
+  // если initial изменился (например, корзину подгрузили асинхронно) — обновим локальное состояние
+  useEffect(() => {
+    setQuantity(initial);
+  }, [initial]);
 
   return { quantity, increaseQuantity, decreaseQuantity };
 };

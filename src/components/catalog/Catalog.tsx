@@ -4,8 +4,8 @@ import { Input } from "components/UI/Input";
 import { CatalogItem } from "./CatalogItem/CatalogItem";
 import { Button } from 'components/UI/button';
 import { useEffect, useState } from 'react';
-import { fetchCatalogProducts } from 'api/catalog-api';
 import type { Product } from 'models/Product';
+import { useSearchProductsQuery } from 'api/dummyApi';
 
 const PAGE = 12;
 
@@ -15,35 +15,39 @@ export const Catalog = () => {
   const [skip, setSkip] = useState(0);
 
   const [items, setItems] = useState<Product[]>([]);
-  const [total, setTotal] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const limit = PAGE
 
   useEffect(() => {
     const t = setTimeout(() => setDebounced(query), 400);
     return () => clearTimeout(t);
   }, [query]);
 
-  useEffect(() => { setSkip(0); }, [debounced]);
+  useEffect(() => { 
+    setSkip(0);
+    setItems([]);
+  }, [debounced]);
+
+  const { data, isLoading, isError } = useSearchProductsQuery({
+    q: debounced,
+    skip,
+    limit,
+  });
 
   useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      setLoading(true); setError(null);
-      try {
-        const data = await fetchCatalogProducts(debounced, skip, PAGE);
-        if (cancelled) return;
-        setTotal(data.total);
-        setItems(prev => (skip === 0 ? data.products : [...prev, ...data.products]));
-      } catch (e: any) {
-        if (!cancelled) setError(e?.message ?? 'Failed to load');
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-    return () => { cancelled = true; };
-  }, [debounced, skip]);
+    if (!data) return;
+  
+    setItems((prev) => {
+      const merged = skip === 0 ? data.products : [...prev, ...data.products];
+  
+      const unique = merged.filter(
+        (p, idx, arr) => arr.findIndex(x => x.id === p.id) === idx
+      );
+  
+      return unique;
+    });
+  }, [data, skip]);
 
+  const total = data?.total ?? 0;
   const hasMore = items.length < total;
 
   return (
@@ -55,7 +59,7 @@ export const Catalog = () => {
           <Input value={query} onChange={(e) => setQuery(e.target.value)} />
         </div>
 
-        {error && <div className={cl.error}>Error: {error}</div>}
+        {isError && <div className={cl.error}>Error: {isError}</div>}
 
         <div className={cl.catalogProducts}>
           {items.map(p => (
@@ -70,11 +74,16 @@ export const Catalog = () => {
           ))}
         </div>
 
-        {loading && <div className={cl.loading}>Loading...</div>}
+        {isLoading && <div className={cl.loading}>Loading...</div>}
 
-        {!loading && hasMore && (
+        {!isLoading && hasMore && (
           <div className={cl.catalogButton}>
-            <Button className={cl.button} view='text' size='big' onClick={() => setSkip(s => s + PAGE)}>
+            <Button 
+              className={cl.button} 
+              view='text' 
+              size='big' 
+              onClick={() => setSkip(s => s + PAGE)}
+            >
               Show more
             </Button>
           </div>

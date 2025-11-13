@@ -4,12 +4,14 @@ import icon from 'image/shopping_cart/Vector.svg'
 import { Button } from 'components/UI/button'
 import { Counter } from 'components/UI/counter'
 import { useQuantity } from 'hooks/useQuantity'
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { calcDiscounted } from 'utils/price'
+import { useAppSelector } from 'hooks/redux'
+import { selectFirstCart } from 'store/reducers/userSlice'
+
 
 interface CatalogItemProps {
   id: number;
-
   title: string;
   price: number;
   discountPercentage: number;
@@ -17,11 +19,21 @@ interface CatalogItemProps {
 }
 
 export const CatalogItem:  React.FC<CatalogItemProps> = ({ id, title, price, discountPercentage, thumbnail }) => {
-  
-  const [showCounter, setShowCounter] = useState(false);
+  const cart = useAppSelector(selectFirstCart);
+  const productInCart = cart?.products.find(p => p.id === id);
+  const cartQty = productInCart?.quantity ?? 0;
+
+  const [showCounter, setShowCounter] = useState(cartQty>0);
   const { quantity, increaseQuantity, decreaseQuantity } = useQuantity(() =>
-    setShowCounter(false)
+    setShowCounter(false),
+    cartQty,
   );
+
+  useEffect(() => {
+    if (cartQty>0) {
+      setShowCounter(true);
+    }
+  }, [cartQty]);
 
   const handlCounterChange = useCallback ((next: number) => {
     if (next > quantity) {
