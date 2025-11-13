@@ -3,7 +3,6 @@ import cl from './Cart.module.css'
 import { Footer } from "components/UI/footer"
 import { NavBar } from 'components/UI/NavBar'
 import { useAppSelector } from 'hooks/redux'
-import { calcDiscounted } from 'utils/price'
 import { CartItem } from './cartitems'
 
 export const Cart = () => {
@@ -12,12 +11,9 @@ export const Cart = () => {
 
   const products = cart?.products ?? [];
 
-  const totalCount = products.reduce((a, p) => a + (p.quantity ?? 0), 0);
-  const priceWithoutDiscount = products.reduce((a, p) => a + p.price * (p.quantity ?? 0), 0);
-  const totalPrice = products.reduce((a, p) => {
-    const discounted = calcDiscounted(p.price, p.discountPercentage ?? 0);
-    return a + discounted * (p.quantity ?? 0);
-  }, 0);
+  const totalCount = cart?.totalProducts ?? 0;
+  const priceWithoutDiscount = cart?.total ?? 0;
+  const totalPrice = cart?.discountedTotal ?? 0;
 
   return (
     <div className={cl.container}>
@@ -65,5 +61,5 @@ export const Cart = () => {
       </div>
       <Footer />
     </div>
-  )
-}
+  );
+};
