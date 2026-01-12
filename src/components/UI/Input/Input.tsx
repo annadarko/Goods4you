@@ -11,7 +11,7 @@ export const Input: React.FC<InputProps> = ({onChange, value}) => {
         <input
             type='text'
             className={cl.input}
-            placeholder='Serach by title'
+            placeholder='Search by title'
             onChange={onChange}
             value={value}
         />

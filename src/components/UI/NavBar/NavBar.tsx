@@ -19,6 +19,7 @@ export const NavBar = () => {
         if (didFetchRef.current) return;
         didFetchRef.current = true;
         dispatch(fetchCartsByUser({ id: 87 }));
+        // dispatch(fetchCartsByUser({ id: 1 })); // empty cart
     }, [dispatch]);
 
     const totalQty = useAppSelector(selectCartTotalQuantity);

@@ -1,63 +1,138 @@
 import 'style/container.css'
 import cl from './ProductContent.module.css'
-import img__big from 'image/product/product_main_photo.svg'
-import img__small from 'image/product/product_small_photo.svg'
-import img__stars from 'image/product/stars.svg'
 import { Button } from 'components/UI/button'
+import { Counter } from "components/UI/counter";
+import type { Product } from "models/Product";
+import { calcDiscounted } from "utils/price";
+import { useAppSelector } from "hooks/redux";
+import { selectFirstCart } from "store/reducers/userSlice";
+import { useQuantity } from "hooks/useQuantity";
+import { useMemo, useState, useEffect, useCallback } from "react";
 
-export const ProductContent = () => {
-    return (
-        <div className="container">
-            <div className={cl.content}>
-                <div className={cl.productWrapper}>
-                    <div className={cl.imgBig}>
-                        <img src={img__big} alt='' />
-                    </div>
-                    <div className={cl.imgItem}>
-                        <img src={img__small} alt='' className={cl.imgSmall} />
-                        <img src={img__small} alt='' className={cl.imgSmall} />
-                        <img src={img__small} alt='' className={cl.imgSmall} />
-                        <img src={img__small} alt='' className={cl.imgSmall} />
-                        <img src={img__small} alt='' className={cl.imgSmall} />
-                        <img src={img__small} alt='' className={cl.imgSmall} />
-                    </div>
-                </div>
-                <div className={cl.infoWrapper}>
-                    <h2 className={cl.title}>
-                        Essence Mascara Lash Princess
-                    </h2>
-                    <div className={cl.raiting}>
-                        <img src={img__stars} alt='' className={cl.stars} />
-                        <span>electronics, selfie accessories</span>
-                    </div>
-                    <div className={cl.line} />
-                    <p className={cl.stock}>In Stock - Only 5 left!</p>
-                    <div className={cl.line} />
-                    <p className={cl.description}>
-                        The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.
-                    </p>
-                    <div className={cl.otherInfo}>
-                        <span>1 month warranty</span>
-                        <span>Ships in 1 month</span>
-                    </div>
-                    <div className={cl.buy}>
-                        <div className={cl.priceWrapper}>
-                            <div className={cl.price}>
-                                <p className={cl.priceUp}>$7.17</p>
-                                <p className={cl.priceDown}>$9.99</p>
-                            </div>
-                            <div className={cl.linePrice}/>
-                            <div className={cl.discount}>
-                                <p className={cl.discountText}>Your discount:</p>
-                                <p className={cl.discountPercent}>14.5%</p>
-                            </div>
-                        </div>
-                        <Button className={cl.btn} view="text" size="big">
-                            Add to cart
-                        </Button>
-                    </div>
-                </div>
+type Props = { product: Product };
+
+export const ProductContent: React.FC<Props> = ({ product }) => {
+  const images = product.images?.length ? product.images : [product.thumbnail];
+  const [activeImg, setActiveImg] = useState(images[0]);
+
+  useEffect(() => {
+    setActiveImg(images[0]);
+  }, [product.id]);
+
+  const ratingInt = useMemo(() => {
+    const r = Math.round(product.rating ?? 0);
+    return Math.min(5, Math.max(0, r));
+  }, [product.rating]);
+  const stars = useMemo(() => Array.from({ length: 5 }, (_, i) => i < ratingInt), [ratingInt]);
+
+  const {price, discountPercentage} = product;
+  const discounted = calcDiscounted(price, discountPercentage);
+
+  const cart = useAppSelector(selectFirstCart);
+  const productInCart = cart?.products.find((p) => p.id === product.id);
+  const cartQty = productInCart?.quantity ?? 0;
+
+  const [showCounter, setShowCounter] = useState(cartQty > 0);
+
+  const { quantity, increaseQuantity, decreaseQuantity } = useQuantity(
+    () => setShowCounter(false),
+    cartQty
+  );
+
+  useEffect(() => {
+    if (cartQty > 0) setShowCounter(true);
+    if (cartQty === 0) setShowCounter(false);
+  }, [cartQty]);
+
+  const handleCounterChange = useCallback(
+    (next: number) => {
+      if (next > quantity) increaseQuantity();
+      else decreaseQuantity();
+    },
+    [quantity, increaseQuantity, decreaseQuantity]
+  );
+
+  const handleAddClick = useCallback(() => {
+    setShowCounter(true);
+    increaseQuantity();
+  }, [increaseQuantity]);
+
+  return (
+    <div className="container">
+      <div className={cl.content}>
+        <div className={cl.productWrapper}>
+          <div className={cl.imgBig}>
+            <img src={activeImg} alt={product.title} />
+          </div>
+
+          {images.length > 1 && (
+            <div className={cl.imgItem}>
+              {images.slice(0, 6).map((src) => (
+                <button
+                  key={src}
+                  type="button"
+                  onClick={() => setActiveImg(src)}
+                  aria-label="Select image"
+                >
+                  <img src={src} alt="" className={cl.imgSmall} />
+                </button>
+              ))}
             </div>
+          )}
         </div>
-    )
-}
+
+        <div className={cl.infoWrapper}>
+          <h2 className={cl.title}>{product.title}</h2>
+
+          <div className={cl.raiting}>
+            <div className={cl.stars}>
+              {stars.map((filled, idx) => (
+                <span key={idx} className={filled ? cl.starFilled : cl.starEmpty}>★</span>
+              ))}
+            </div>
+            <span className={cl.tagsText}>{product.tags?.join(", ")}</span>
+          </div>
+
+          <div className={cl.line} />
+
+          <p className={cl.stock}>
+            {product.stock > 0 ? `In Stock - Only ${product.stock} left!` : "Out of stock"}
+          </p>
+
+          <div className={cl.line} />
+
+          <p className={cl.description}>{product.description}</p>
+
+          <div className={cl.otherInfo}>
+            <span>{product.warrantyInformation}</span>
+            <span>{product.shippingInformation}</span>
+          </div>
+
+          <div className={cl.buy}>
+            <div className={cl.priceWrapper}>
+              <div className={cl.price}>
+                <p className={cl.priceUp}>${Number(discounted)}</p>
+                <p className={cl.priceDown}>${Number(product.price).toFixed(2)}</p>
+              </div>
+
+              <div className={cl.linePrice} />
+
+              <div className={cl.discount}>
+                <p className={cl.discountText}>Your discount:</p>
+                <p className={cl.discountPercent}>{product.discountPercentage}%</p>
+              </div>
+            </div>
+
+            {showCounter ? (
+              <Counter size="medium" value={quantity} onChange={handleCounterChange} />
+            ) : (
+                <Button className={cl.btn} view="text" size="big" onClick={handleAddClick}>
+                    Add to cart
+                </Button>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

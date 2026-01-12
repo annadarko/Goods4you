@@ -6,6 +6,9 @@ export interface Product {
     description: string;
     discountPercentage: number;
     stock: number;
+    images: string [];
+    rating: number;
+    tags: string[];
     quantity: number;
     warrantyInformation: string;
     shippingInformation: string;
