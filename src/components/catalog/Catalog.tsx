@@ -59,7 +59,7 @@ export const Catalog = () => {
           <Input value={query} onChange={(e) => setQuery(e.target.value)} />
         </div>
 
-        {isError && <div className={cl.error}>Error: {isError}</div>}
+        {isError && <div> Error loading product {isError}</div>}
 
         <div className={cl.catalogProducts}>
           {items.map(p => (

@@ -27,7 +27,7 @@ export const Cart = () => {
           <h2 className={cl.title}>My cart</h2>
 
           {isLoading && <div>Loading...</div>}
-          {error && <div className={cl.error}>Error: {error}</div>}
+          {error && <div>Error loading product </div>}
 
           {!isLoading && !error && (
             <>
