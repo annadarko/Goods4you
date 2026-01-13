@@ -25,6 +25,7 @@ export const Button: React.FC<Button> = ({
 }) => {
     return (
         <button 
+            type={type}
             className={cn(className, cl[view], cl[size])} 
             onClick={onClick} 
             disabled={disabled}
