@@ -1,4 +1,4 @@
-import cl from '../NavBar/NavBar.module.css';
+import cl from './NavBar.module.css';
 import 'style/container.css';
 import { Link } from 'react-router-dom';
 import shopping_cart from 'image/shopping_cart/Vector.svg';

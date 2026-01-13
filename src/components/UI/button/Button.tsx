@@ -8,6 +8,9 @@ interface Button {
     onClick?: () => void;
     view?: 'text' | 'icon';
     size?: 'big' | 'small';
+
+    disabled?: boolean;
+    type?: 'button' | 'submit' | 'reset'; 
 }
 
 export const Button: React.FC<Button> = ({
@@ -16,9 +19,16 @@ export const Button: React.FC<Button> = ({
     onClick,
     view = 'text',
     size = 'small',
+
+    disabled,
+    type = 'button'
 }) => {
     return (
-        <button className={cn(className, cl[view], cl[size])} onClick={onClick}>
+        <button 
+            className={cn(className, cl[view], cl[size])} 
+            onClick={onClick} 
+            disabled={disabled}
+        >
             {children}
         </button>
     );
