@@ -47,6 +47,42 @@
     object-fit: contain;
 }
 
+.imgBox {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    aspect-ratio: 1/1; 
+}
+
+.imgSkeleton {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(0,0,0,0.06),
+      rgba(0,0,0,0.12),
+      rgba(0,0,0,0.06)
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.2s infinite;
+  }
+  
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  
+  .imgFallback {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-slim);
+    font-size: 20px;
+  }
+
 .mask {
     position: absolute;
     background: rgb(0 0 0 / 25%);

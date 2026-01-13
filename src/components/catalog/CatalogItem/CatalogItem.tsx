@@ -48,12 +48,30 @@ export const CatalogItem:  React.FC<CatalogItemProps> = ({ id, title, price, dis
     increaseQuantity();
   }, [increaseQuantity]);
 
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const [imgError, setImgError] = useState(false);
+
   const discounted = calcDiscounted(price, discountPercentage);
 
   return (
     <div className={cl.item}>
       <Link className={cl.itemImg} to={`/product/${id}`}>
-        <img src={thumbnail} alt={title} />
+        <div className={cl.imgBox}>
+          {!imgLoaded && !imgError && <div className={cl.imgSkeleton} />}
+          {imgError && <div className={cl.imgFallback}>No image</div>}
+
+          <img 
+            src={thumbnail} 
+            alt={title} 
+            loading='lazy'
+            onLoad={() => setImgLoaded(true)}
+            onError={() => {
+              setImgError(true);
+              setImgLoaded(true);
+            }}
+            style={{opacity: imgLoaded && !imgError ? 1:0}}
+          />
+        </div>
         <div className={cl.mask}>
           <span>Show details</span>
         </div>
