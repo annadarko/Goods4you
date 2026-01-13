@@ -8,7 +8,6 @@ interface Button {
     onClick?: () => void;
     view?: 'text' | 'icon';
     size?: 'big' | 'small';
-
     disabled?: boolean;
     type?: 'button' | 'submit' | 'reset'; 
 }
@@ -19,7 +18,6 @@ export const Button: React.FC<Button> = ({
     onClick,
     view = 'text',
     size = 'small',
-
     disabled,
     type = 'button'
 }) => {

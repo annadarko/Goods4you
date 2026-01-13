@@ -78,3 +78,15 @@
 .button:disabled {
     background: var(--btn-bg-disabled);
 }
+
+.btnSpinner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+.btnSpinner img {
+    width: 62px;
+    height: 42px;
+    display: block;
+}

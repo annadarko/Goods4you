@@ -3,9 +3,10 @@ import cl from './Catalog.module.css'
 import { Input } from "components/UI/Input";
 import { CatalogItem } from "./CatalogItem/CatalogItem";
 import { Button } from 'components/UI/button';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import type { Product } from 'models/Product';
 import { useSearchProductsQuery } from 'api/dummyApi';
+import loading from 'image/shopping_cart/loading.svg'
 
 const PAGE = 12;
 
@@ -27,7 +28,7 @@ export const Catalog = () => {
     setItems([]);
   }, [debounced]);
 
-  const { data, isLoading, isError } = useSearchProductsQuery({
+  const { data, isLoading, isFetching, isError } = useSearchProductsQuery({
     q: debounced,
     skip,
     limit,
@@ -49,6 +50,14 @@ export const Catalog = () => {
 
   const total = data?.total ?? 0;
   const hasMore = items.length < total;
+
+  const isInitialLoading = isLoading && skip === 0;
+  const isMoreLoading = isFetching && skip > 0;
+
+  const handleShowMore = useCallback(() => {
+    if (isFetching) return;
+    setSkip(s => s + PAGE);
+  }, [isFetching]);
 
   return (
     <div className={cl.catalog} id="Catalog">
@@ -74,15 +83,23 @@ export const Catalog = () => {
           ))}
         </div>
 
-        {isLoading && <div className={cl.loading}>Loading...</div>}
+        {isInitialLoading && <div className={cl.loading}>Loading...</div>}
 
-        {!isLoading && hasMore && (
+        {isMoreLoading && (
           <div className={cl.catalogButton}>
-            <Button 
-              className={cl.button} 
-              view='text' 
-              size='big' 
-              onClick={() => setSkip(s => s + PAGE)}
+            <span className={cl.btnSpinner}>
+              <img src={loading} alt="Loading" />
+            </span>
+          </div>
+        )}
+
+        {!isFetching && hasMore && (
+          <div className={cl.catalogButton}>
+            <Button
+              className={cl.button}
+              view="text"
+              size="big"
+              onClick={handleShowMore}
             >
               Show more
             </Button>
