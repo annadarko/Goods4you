@@ -1,7 +1,6 @@
 .content {
     display: flex;
     justify-content: space-between;
-    /* justify-content: flex-start; */
     gap: 40px;
     margin: 48px 0;
 }
@@ -58,7 +57,7 @@
     cursor: pointer;
 }
 
-.imgSmall:active {
+.imgSmallActive {
     border-radius: 4px;
     outline: 3px solid #C4C4C4;
 }

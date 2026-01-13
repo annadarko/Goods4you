@@ -74,7 +74,11 @@ export const ProductContent: React.FC<Props> = ({ product }) => {
                   onClick={() => setActiveImg(src)}
                   aria-label="Select image"
                 >
-                  <img src={src} alt="" className={cl.imgSmall} />
+                  <img 
+                    src={src} 
+                    alt="" 
+                    className={`${cl.imgSmall} ${activeImg === src ? cl.imgSmallActive : ""}`} 
+                  />
                 </button>
               ))}
             </div>
