@@ -16,5 +16,5 @@ export const PageRouter = () => {
                 <Route path="/login" element={<LoginPage />} />
             </Routes>
         </div>
-    )
-}
+    );
+};

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom"
-import cl from './AuthHeader.module.css'
+import cl from './LoginHeader.module.css'
 import 'style/container.css'
 
-export const AuthHeader = () => {
+export const LoginHeader = () => {
     return (
         <div className={cl.header}>
             <div className="container">
