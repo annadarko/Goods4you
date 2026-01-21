@@ -3,6 +3,7 @@ import { Home } from "./pages/Home/Home";
 import { ProductPage } from "./pages/ProductPage";
 import { CartPage } from "./pages/CartPage/CartPage";
 import { NotFound } from "./pages/NotFound";
+import { LoginPage } from "./pages/LoginPage/LoginPage";
 
 export const PageRouter = () => {
     return (
@@ -12,6 +13,7 @@ export const PageRouter = () => {
                 <Route path="/product/:id" element={<ProductPage />} />
                 <Route path="/cart" element={<CartPage />} />
                 <Route path="*" element={<NotFound />} />
+                <Route path="/login" element={<LoginPage />} />
             </Routes>
         </div>
     )
