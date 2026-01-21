@@ -1,7 +1,6 @@
 .content {
     display: flex;
     justify-content: space-between;
-    justify-content: flex-start;
     gap: 40px;
     margin: 48px 0;
 }
@@ -58,7 +57,7 @@
     cursor: pointer;
 }
 
-.imgSmall:active {
+.imgSmallActive {
     border-radius: 4px;
     outline: 3px solid #C4C4C4;
 }
@@ -95,10 +94,25 @@
 }
 
 .stars {
-    height: 20px;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    line-height: 1;
+  }
+
+.starFilled{
+    color: #F14F4F; /* или твоя переменная */
+    font-size: 20px;
+    line-height: 1;
 }
 
-.raiting span {
+.starEmpty {
+    color: #D5D5D5;
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  .tagsText {
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;

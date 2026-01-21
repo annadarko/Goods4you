@@ -63,6 +63,7 @@
     line-height: 20px;
     color: var(--text-input);
     cursor: pointer;
+    background: none;
 }
 
 .delete:hover {

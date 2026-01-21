@@ -17,6 +17,15 @@
     padding: 48px 0;
 }
 
+.empty {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 36px;
+    color: var(--text-input);
+    display: flex;
+    justify-content: center;
+}
+
 .cart {
     display: flex;
     justify-content: space-between;

@@ -1,22 +1,39 @@
 import { Link } from 'react-router-dom'
 import cl from './CatalogItem.module.css'
-import img from 'image/product/CatalogItem.svg'
 import icon from 'image/shopping_cart/Vector.svg'
 import { Button } from 'components/UI/button'
 import { Counter } from 'components/UI/counter'
 import { useQuantity } from 'hooks/useQuantity'
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
+import { calcDiscounted } from 'utils/price'
+import { useAppSelector } from 'hooks/redux'
+import { selectFirstCart } from 'store/reducers/userSlice'
+
 
 interface CatalogItemProps {
   id: number;
+  title: string;
+  price: number;
+  discountPercentage: number;
+  thumbnail: string;
 }
 
-export const CatalogItem:  React.FC<CatalogItemProps> = ({ id }) => {
-  
-  const [showCounter, setShowCounter] = useState(false);
+export const CatalogItem:  React.FC<CatalogItemProps> = ({ id, title, price, discountPercentage, thumbnail }) => {
+  const cart = useAppSelector(selectFirstCart);
+  const productInCart = cart?.products.find(p => p.id === id);
+  const cartQty = productInCart?.quantity ?? 0;
+
+  const [showCounter, setShowCounter] = useState(cartQty>0);
   const { quantity, increaseQuantity, decreaseQuantity } = useQuantity(() =>
-    setShowCounter(false)
+    setShowCounter(false),
+    cartQty,
   );
+
+  useEffect(() => {
+    if (cartQty>0) {
+      setShowCounter(true);
+    }
+  }, [cartQty]);
 
   const handlCounterChange = useCallback ((next: number) => {
     if (next > quantity) {
@@ -31,10 +48,30 @@ export const CatalogItem:  React.FC<CatalogItemProps> = ({ id }) => {
     increaseQuantity();
   }, [increaseQuantity]);
 
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const [imgError, setImgError] = useState(false);
+
+  const discounted = calcDiscounted(price, discountPercentage);
+
   return (
     <div className={cl.item}>
       <Link className={cl.itemImg} to={`/product/${id}`}>
-        <img src={img} alt="" />
+        <div className={cl.imgBox}>
+          {!imgLoaded && !imgError && <div className={cl.imgSkeleton} />}
+          {imgError && <div className={cl.imgFallback}>No image</div>}
+
+          <img 
+            src={thumbnail} 
+            alt={title} 
+            loading='lazy'
+            onLoad={() => setImgLoaded(true)}
+            onError={() => {
+              setImgError(true);
+              setImgLoaded(true);
+            }}
+            style={{opacity: imgLoaded && !imgError ? 1:0}}
+          />
+        </div>
         <div className={cl.mask}>
           <span>Show details</span>
         </div>
@@ -42,9 +79,9 @@ export const CatalogItem:  React.FC<CatalogItemProps> = ({ id }) => {
       <div className={cl.itemContent}>
         <div className={cl.contentInfo}>
           <Link className={cl.contentTitle} to={`/product/${id}`}>
-            Essence Mascara Lash Princess
+            {title}
           </Link>
-          <p className={cl.contentPrice}>$110</p>
+          <p className={cl.contentPrice}>${discounted}</p>
         </div>
         {showCounter ? (
           <Counter

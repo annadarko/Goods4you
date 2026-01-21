@@ -15,7 +15,7 @@
     display:grid;
     grid-template-columns: repeat(3, minmax(300px, 1fr));
     margin-bottom: 40px;
-    gap: 20px;
+    gap: 35px;
 }
 
 @media (max-width:1370px){
@@ -77,4 +77,16 @@
 
 .button:disabled {
     background: var(--btn-bg-disabled);
+}
+
+.btnSpinner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+.btnSpinner img {
+    width: 62px;
+    height: 42px;
+    display: block;
 }

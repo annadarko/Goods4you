@@ -13,6 +13,8 @@
     display: flex;
     gap: 40px;
     list-style-type: none;
+    flex-wrap: nowrap;
+    align-items: center;
 }
 
 .item a{
@@ -74,7 +76,7 @@
     }
     .burger span { 
         height: 3px; 
-        width:1 00%; 
+        width:100%; 
         background: var(--main-color); 
         border-radius:2px; 
     }
