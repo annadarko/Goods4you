@@ -5,7 +5,6 @@ import shopping_cart from 'image/shopping_cart/Vector.svg';
 import { useBurger } from 'hooks/useBurger';
 import { useRef, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { fetchCartsByUser } from 'store/reducers/actionCreators';
 import { selectCartTotalQuantity, selectShowBadge } from 'store/reducers/userSlice';
 
 export const NavBar = () => {
@@ -18,8 +17,6 @@ export const NavBar = () => {
     useEffect(() => {
         if (didFetchRef.current) return;
         didFetchRef.current = true;
-        dispatch(fetchCartsByUser({ id: 87 }));
-        // dispatch(fetchCartsByUser({ id: 1 })); // empty cart
     }, [dispatch]);
 
     const totalQty = useAppSelector(selectCartTotalQuantity);

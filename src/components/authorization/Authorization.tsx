@@ -3,10 +3,31 @@ import cl from './Authorization.module.css'
 import { Input } from 'components/UI/Input'
 import { useState } from 'react'
 import { Button } from 'components/UI/button'
+import { useLoginUserMutation } from 'api/authApi'
+import { useAppDispatch } from 'hooks/redux'
+import { useNavigate } from 'react-router-dom'
+import { fetchCartsByUser } from 'store/reducers/actionCreators'
+import loading from 'image/shopping_cart/loading.svg'
+
 
 export const Authorization = () => {
-    const [login, setLogin] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    const[loginUser, {isLoading, error}] = useLoginUserMutation();
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    const handleSubmit = async () => {
+        try {
+            const user = await loginUser({username, password}).unwrap();
+            localStorage.setItem('token', user.accessToken);
+            dispatch(fetchCartsByUser({id: user.id}));
+            navigate('/');
+        } catch (e) {
+
+        }
+    };
 
     return (
         <div className='container'>
@@ -15,9 +36,9 @@ export const Authorization = () => {
                 <div className={cl.form}>
                     <Input 
                         className={cl.input}
-                        placeholder="Login" 
-                        value={login}
-                        onChange={(e) => setLogin(e.target.value)}
+                        placeholder="Username" 
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                     />
                     <Input
                         className={cl.input}  
@@ -26,13 +47,24 @@ export const Authorization = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <Button
-                        className={cl.button}
-                        view="text"
-                        size="small"
-                    >
-                        <p className={cl.text}>Sign in</p>
-                    </Button>
+                    <div className={cl.error}>
+                        {error && <span>Некорректный логин или пароль</span>}
+                    </div>
+                    {isLoading ? (
+                            <span className={cl.btnSpinner}>
+                                <img src={loading} alt="Loading" />
+                            </span>
+                    ) : (
+                        <Button
+                            className={cl.button}
+                            onClick={handleSubmit}
+                            view="text"
+                            size="small"
+                            disabled={!username || !password}
+                        >
+                            Sign in
+                        </Button>
+                    )}
                 </div>
             </div>
         </div>

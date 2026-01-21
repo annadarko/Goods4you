@@ -21,7 +21,7 @@
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;
-    gap: 60px;
+    gap: 40px;
     border: 1px solid #c4c4c4;
     border-radius: 4px;
     padding: 60px;
@@ -61,4 +61,24 @@
     .input {
         width: 177px;
     }
+}
+
+.error{
+    min-height: 20px;
+    color: var(--btn-bg);
+    font-size: 16px;
+    line-height: 18px;
+    text-align: center;
+}
+
+.btnSpinner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btnSpinner img {
+    width: 62px;
+    height: 42px;
+    display: block;
 }
