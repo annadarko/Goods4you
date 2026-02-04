@@ -3,10 +3,9 @@ import cl from './Authorization.module.css'
 import { Input } from 'components/UI/Input'
 import { useState } from 'react'
 import { Button } from 'components/UI/button'
-import { useLoginUserMutation } from 'api/authApi'
+import { authApi, useLoginUserMutation } from 'api/authApi'
 import { useAppDispatch } from 'hooks/redux'
 import { useNavigate } from 'react-router-dom'
-import { fetchCartsByUser } from 'store/reducers/actionCreators'
 import loading from 'image/shopping_cart/loading.svg'
 
 
@@ -22,7 +21,7 @@ export const Authorization = () => {
         try {
             const user = await loginUser({username, password}).unwrap();
             localStorage.setItem('token', user.accessToken);
-            dispatch(fetchCartsByUser({id: user.id}));
+            dispatch(authApi.util.invalidateTags(['Me']));
             navigate('/');
         } catch (e) {
 

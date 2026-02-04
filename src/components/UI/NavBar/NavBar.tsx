@@ -3,26 +3,20 @@ import 'style/container.css';
 import { Link } from 'react-router-dom';
 import shopping_cart from 'image/shopping_cart/Vector.svg';
 import { useBurger } from 'hooks/useBurger';
-import { useRef, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { useAppSelector } from 'hooks/redux';
 import { selectCartTotalQuantity, selectShowBadge } from 'store/reducers/userSlice';
+import { useGetCurrentUserQuery } from 'api/authApi';
 
 export const NavBar = () => {
 
     const { open, toggle, closeMenu } = useBurger();
-    const dispatch = useAppDispatch();
 
-    const didFetchRef = useRef (false);
-
-    useEffect(() => {
-        if (didFetchRef.current) return;
-        didFetchRef.current = true;
-    }, [dispatch]);
+    const token = localStorage.getItem('token');
+    const {data: me} = useGetCurrentUserQuery(undefined, {skip: !token});
+    const fullName = me? `${me.firstName} ${me.lastName}` : '';
 
     const totalQty = useAppSelector(selectCartTotalQuantity);
     const showBadge = useAppSelector(selectShowBadge);
-
-    const username = 'Johnson Smith';
 
     return (
         <div className={cl.navbar}>
@@ -54,7 +48,7 @@ export const NavBar = () => {
                             </Link>
                         </li>
                         <li className={cl.item}>
-                            <Link to="#" onClick={closeMenu}>{username}</Link>
+                            <Link to="#" onClick={closeMenu}>{fullName}</Link>
                         </li>
                     </ul>
                 </div>
