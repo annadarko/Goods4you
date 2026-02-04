@@ -6,28 +6,29 @@ export type LoginRequest = {
   password: string;
 };
 
-export const authApi = createApi({
-  reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({
+export type CurrentUser = Omit<LoginUser, 'accessToken' | 'refreshToken'>;
+
+const baseQuery = fetchBaseQuery({
     baseUrl: 'https://dummyjson.com',
     prepareHeaders: (headers) => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
+        const token = localStorage.getItem('token');
+        if (token) headers.set('Authorization', `Bearer ${token}`);
     }
-      return headers;
-    },
-  }),
+})
+
+export const authApi = createApi({
+  reducerPath: 'authApi',
+  baseQuery,
   endpoints: (builder) => ({
-    loginUser: builder.mutation<LoginUser, LoginRequest>({
-      query: (body) => ({
-        url: "/auth/login",
-        method: "POST",
-        body,
-      }),
+    loginUser: builder.mutation<LoginUser, LoginRequest> ({
+        query: (body) => ({
+            url: '/auth/login',
+            method: 'POST',
+            body,
+        }),
     }),
-    getCurrentUser: builder.query<LoginUser, void>({
-        query: () => "auth/me",
+    getCurrentUser: builder.query<CurrentUser, void>({
+        query: () => '/auth/me'
     }),
   }),
 });
