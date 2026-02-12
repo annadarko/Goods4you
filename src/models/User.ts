@@ -7,9 +7,10 @@ export type CartProduct = Product & {
 };
 
 export interface User {
+id: number;
 totalQuantity: number;
 totalProducts: number;
 discountedTotal: number;
 total: number;
-products: Product[];
+products: CartProduct[];
 }

@@ -2,9 +2,12 @@ import cl from './CartItems.module.css'
 import { Link } from 'react-router-dom'
 import { calcDiscounted } from 'utils/price';
 import icon from 'image/shopping_cart/Vector.svg';
-import { useState } from 'react';
+//import { useState } from 'react';
 import { Counter } from 'components/UI/counter';
 import { Button } from 'components/UI/button';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { selectIsCartUpdatingById } from 'store/reducers/userSlice';
+import { updateCartItem } from 'store/reducers/actionCreators';
 
 interface CartItemProps {
   id: number;
@@ -18,57 +21,54 @@ interface CartItemProps {
 export const CartItem: React.FC<CartItemProps> = ({
   id, title, thumbnail, price, discountPercentage, quantity
 }) => {
-  const discounted = calcDiscounted(price, discountPercentage);
 
-  const [count, setCount] = useState<number>(quantity);
-  const [isDeleted, setIsDeleted] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const isUpdating = useAppSelector((s) => selectIsCartUpdatingById(s, id));
 
   const handleChange = (next: number) => {
-    setCount(next);
-    if (next===0) {
-      setIsDeleted(true);
-    }
+    dispatch(updateCartItem({ productId: id, nextQty: next }));
   };
 
   const handleDelete = () => {
-    setIsDeleted(true);
-    setCount(0);
+    dispatch(updateCartItem({ productId: id, nextQty: 0 }));
   };
 
   const handleAddBack = () => {
-    setIsDeleted(false);
-    setCount(1);
-  }
+    dispatch(updateCartItem({ productId: id, nextQty: 1 }));
+  };
 
   return (
-    <div className={cl.item}>
+    <div className={`${cl.item} ${quantity===0 ? cl.itemDisabled : ''}`}>
       <img src={thumbnail} alt={title} />
       <div className={cl.description}>
         <Link to={`/product/${id}`} className={cl.text}>{title}</Link>
-        <p className={cl.price}>${discounted}</p>
+        <p className={cl.price}>${calcDiscounted(price, discountPercentage)}</p>
       </div>
+
       <div className={cl.controls}>
-        {! isDeleted ? (
+        {quantity > 0 ? (
           <>
-            <Counter size='medium' value={count} onChange={handleChange}/>
+            <Counter size="medium" value={quantity} onChange={handleChange} />
             <button
-              type='button'
+              type="button"
               className={cl.delete}
               onClick={handleDelete}
+              disabled={isUpdating}
             >
               Delete
             </button>
           </>
-        ):(
-            <Button
-              className={cl.button}
-              view='icon'
-              size='small'
-              onClick={handleAddBack}
-            >
-              <img src={icon} className={cl.icon} alt='' />
-            </Button>
-          )}
+        ) : (
+          <Button
+            className={cl.button}
+            view="icon"
+            size="small"
+            onClick={handleAddBack}
+            disabled={isUpdating}
+          >
+            <img src={icon} className={cl.icon} alt="" />
+          </Button>
+        )}
       </div>
     </div>
   );

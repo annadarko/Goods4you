@@ -5,6 +5,11 @@
     width: 100%;
 }
 
+.itemDisabled {
+    opacity: 0.6;
+    filter: grayscale(40%);
+}
+
 @media (max-width: 600px) {
     .item {
       flex-wrap: wrap;              
