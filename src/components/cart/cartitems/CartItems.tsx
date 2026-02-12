@@ -2,7 +2,6 @@ import cl from './CartItems.module.css'
 import { Link } from 'react-router-dom'
 import { calcDiscounted } from 'utils/price';
 import icon from 'image/shopping_cart/Vector.svg';
-//import { useState } from 'react';
 import { Counter } from 'components/UI/counter';
 import { Button } from 'components/UI/button';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';

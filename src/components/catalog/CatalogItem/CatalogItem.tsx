@@ -3,11 +3,11 @@ import cl from './CatalogItem.module.css'
 import icon from 'image/shopping_cart/Vector.svg'
 import { Button } from 'components/UI/button'
 import { Counter } from 'components/UI/counter'
-import { useQuantity } from 'hooks/useQuantity'
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState } from "react";
 import { calcDiscounted } from 'utils/price'
-import { useAppSelector } from 'hooks/redux'
-import { selectFirstCart } from 'store/reducers/userSlice'
+import { useAppDispatch, useAppSelector } from 'hooks/redux'
+import { selectFirstCart, selectIsCartUpdatingById } from 'store/reducers/userSlice'
+import { updateCartItem } from 'store/reducers/actionCreators'
 
 
 interface CatalogItemProps {
@@ -19,34 +19,22 @@ interface CatalogItemProps {
 }
 
 export const CatalogItem:  React.FC<CatalogItemProps> = ({ id, title, price, discountPercentage, thumbnail }) => {
+  const dispatch = useAppDispatch();
+  
   const cart = useAppSelector(selectFirstCart);
-  const productInCart = cart?.products.find(p => p.id === id);
-  const cartQty = productInCart?.quantity ?? 0;
-
-  const [showCounter, setShowCounter] = useState(cartQty>0);
-  const { quantity, increaseQuantity, decreaseQuantity } = useQuantity(() =>
-    setShowCounter(false),
-    cartQty,
-  );
-
-  useEffect(() => {
-    if (cartQty>0) {
-      setShowCounter(true);
-    }
-  }, [cartQty]);
+  const cartQty = cart?.products.find(p => p.id === id)?.quantity ?? 0;
+  const isUpdating = useAppSelector((s) => selectIsCartUpdatingById(s, id));
+  const showCounter = cartQty > 0;
 
   const handlCounterChange = useCallback ((next: number) => {
-    if (next > quantity) {
-      increaseQuantity();
-    } else {
-      decreaseQuantity();
-    }
-  }, [quantity, increaseQuantity, decreaseQuantity]);
+    if (isUpdating) return;
+    dispatch(updateCartItem({ productId: id, nextQty: next }));
+  }, [dispatch, id, isUpdating]);
 
   const handleAddClick = useCallback(()=> {
-    setShowCounter (true);
-    increaseQuantity();
-  }, [increaseQuantity]);
+    if (isUpdating) return;
+    dispatch(updateCartItem({ productId: id, nextQty: 1 }));
+  }, [dispatch, id, isUpdating]);
 
   const [imgLoaded, setImgLoaded] = useState(false);
   const [imgError, setImgError] = useState(false);
@@ -86,7 +74,7 @@ export const CatalogItem:  React.FC<CatalogItemProps> = ({ id, title, price, dis
         {showCounter ? (
           <Counter
             size="medium"
-            value={quantity}
+            value={cartQty}
             onChange={handlCounterChange}
           />
         ) : (
@@ -95,6 +83,7 @@ export const CatalogItem:  React.FC<CatalogItemProps> = ({ id, title, price, dis
             view="icon"
             size="small"
             onClick={handleAddClick}
+            disabled={isUpdating}
           >
             <img src={icon} className={cl.icon} alt="Cart" />
           </Button>
