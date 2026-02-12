@@ -52,4 +52,9 @@ export const updateCartItem = createAsyncThunk<
   } catch (error: any) {
     return rejectWithValue(error?.message ?? "Update cart failed");;
   }
-});
+},
+{condition: ({productId}, {getState}) => {
+  const state = getState() as RootState;
+  return !state.userSlice.cartUpdating[productId];
+}}
+);

@@ -160,7 +160,7 @@
 .buy {
     display: flex;
     align-items: center;
-    gap: 40px;
+    /* gap: 40px; */
     border-radius: 6px;
     height: 86px;
     background: rgb(0 0 0 / 4%);
