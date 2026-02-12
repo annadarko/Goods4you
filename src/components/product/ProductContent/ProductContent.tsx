@@ -52,13 +52,19 @@ export const ProductContent: React.FC<Props> = ({ product }) => {
   const handleCounterChange = useCallback((next: number) => {
       if (isUpdating) return;
       dispatch(updateCartItem({ productId: product.id, nextQty: next }));
-    },[]
+    },[dispatch, isUpdating, product.id]
   );
 
   const handleAddClick = useCallback(() => {
-    if (isUpdating) return;
-    dispatch(updateCartItem({ productId: product.id, nextQty: 1 }));
-  }, []);
+      if (isUpdating) return;
+      dispatch(updateCartItem({ productId: product.id, nextQty: 1 }));
+    }, [dispatch, isUpdating, product.id]
+);
+
+  const stock = product.stock ?? 0;
+
+  const canIncrease = cartQty < stock;
+  const canDecrease = cartQty > 0; 
 
   return (
     <div className="container">
@@ -131,10 +137,22 @@ export const ProductContent: React.FC<Props> = ({ product }) => {
             </div>
 
             {showCounter ? (
-              <Counter size="medium" value={cartQty} onChange={handleCounterChange} />
+              <Counter 
+                size="medium" 
+                value={cartQty} 
+                onChange={handleCounterChange}
+                disablePlus={!canIncrease || isUpdating}
+                disableMinus={!canDecrease || isUpdating}
+              />
             ) : (
-                <Button className={cl.btn} view="text" size="big" onClick={handleAddClick} disabled={isUpdating}>
-                    Add to cart
+                <Button 
+                  className={cl.btn} 
+                  view="text" 
+                  size="big" 
+                  onClick={handleAddClick} 
+                  disabled={isUpdating || stock <= 0}
+                >
+                  Add to cart
                 </Button>
             )}
           </div>

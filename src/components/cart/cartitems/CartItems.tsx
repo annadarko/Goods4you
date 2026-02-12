@@ -47,7 +47,11 @@ export const CartItem: React.FC<CartItemProps> = ({
       <div className={cl.controls}>
         {quantity > 0 ? (
           <>
-            <Counter size="medium" value={quantity} onChange={handleChange} />
+            <Counter 
+              size="medium" 
+              value={quantity} 
+              onChange={handleChange}
+            />
             <button
               type="button"
               className={cl.delete}

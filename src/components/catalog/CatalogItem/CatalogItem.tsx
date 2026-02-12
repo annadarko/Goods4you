@@ -16,25 +16,29 @@ interface CatalogItemProps {
   price: number;
   discountPercentage: number;
   thumbnail: string;
+  stock: number;
 }
 
-export const CatalogItem:  React.FC<CatalogItemProps> = ({ id, title, price, discountPercentage, thumbnail }) => {
+export const CatalogItem:  React.FC<CatalogItemProps> = ({ id, title, price, discountPercentage, thumbnail, stock }) => {
   const dispatch = useAppDispatch();
   
   const cart = useAppSelector(selectFirstCart);
   const cartQty = cart?.products.find(p => p.id === id)?.quantity ?? 0;
   const isUpdating = useAppSelector((s) => selectIsCartUpdatingById(s, id));
   const showCounter = cartQty > 0;
+  const canIncrease = cartQty < stock;
+  const canDecrease = cartQty > 0;
 
   const handlCounterChange = useCallback ((next: number) => {
     if (isUpdating) return;
+    if (next > stock) return;
     dispatch(updateCartItem({ productId: id, nextQty: next }));
-  }, [dispatch, id, isUpdating]);
+  }, [dispatch, id, isUpdating, stock]);
 
   const handleAddClick = useCallback(()=> {
     if (isUpdating) return;
     dispatch(updateCartItem({ productId: id, nextQty: 1 }));
-  }, [dispatch, id, isUpdating]);
+  }, [dispatch, id, isUpdating, canIncrease]);
 
   const [imgLoaded, setImgLoaded] = useState(false);
   const [imgError, setImgError] = useState(false);
@@ -76,6 +80,8 @@ export const CatalogItem:  React.FC<CatalogItemProps> = ({ id, title, price, dis
             size="medium"
             value={cartQty}
             onChange={handlCounterChange}
+            disablePlus = {!canIncrease || isUpdating} 
+            disableMinus = {!canDecrease || isUpdating}
           />
         ) : (
           <Button
@@ -83,7 +89,7 @@ export const CatalogItem:  React.FC<CatalogItemProps> = ({ id, title, price, dis
             view="icon"
             size="small"
             onClick={handleAddClick}
-            disabled={isUpdating}
+            disabled={isUpdating || !canIncrease}
           >
             <img src={icon} className={cl.icon} alt="Cart" />
           </Button>

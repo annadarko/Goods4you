@@ -79,6 +79,7 @@ export const Catalog = () => {
               price={p.price}
               discountPercentage={p.discountPercentage}
               thumbnail={p.thumbnail}
+              stock={p.stock}
             />
           ))}
         </div>

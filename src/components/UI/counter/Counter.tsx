@@ -7,15 +7,19 @@ interface CounterProps {
   size?: "medium" | "large";
   value: number;
   onChange: (next: number) => void;
+  disablePlus?: boolean;
+  disableMinus?: boolean;
 }
 
 export const Counter: React.FC<CounterProps> = ({
   size = "medium",
   value,
-  onChange
+  onChange,
+  disablePlus = false,
+  disableMinus = false,
 }) => {
-  const increment = () => onChange(value+1);
-  const decrement = () => onChange(Math.max(0, value -1));
+  const increment = () => {if (!disablePlus) onChange(value+1)};
+  const decrement = () => {if (!disableMinus) onChange(Math.max(0, value -1))};
 
   return (
     <div className={cl.counter}>
@@ -23,6 +27,7 @@ export const Counter: React.FC<CounterProps> = ({
         className={cn(cl.button, cl[size])}
         onClick={decrement}
         view="icon"
+        disabled={disableMinus}
       >
         <div className={cl.minus} />
       </Button>
@@ -31,6 +36,7 @@ export const Counter: React.FC<CounterProps> = ({
         className={cn(cl.button, cl[size])}
         onClick={increment}
         view="icon"
+        disabled={disablePlus}
       >
         <div className={cl.plus} />
       </Button>
