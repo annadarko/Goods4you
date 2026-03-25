@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { updateCart } from "api/cart-api";
 import { fetchCartsByUsers } from "api/user-api";
 import { CartsData } from "api/user-api";
+import axios from "axios";
 import type { User } from "models/User";
 import type { RootState } from "store/store";
 
@@ -13,8 +14,16 @@ export const fetchCartsByUser = createAsyncThunk<
   try {
     const data = await fetchCartsByUsers(id);
     return data;
-  } catch (error) {
-    return rejectWithValue(`Error ${error}`);
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(`Error ${error.message}`);
+    }
+
+    if (error instanceof Error) {
+      return rejectWithValue(`Error ${error.message}`);
+    }
+
+    return rejectWithValue('Error fetching carts');
   }
 });
 
@@ -33,8 +42,7 @@ export const updateCartItem = createAsyncThunk<
     const cart = state.userSlice.user.carts[0];
 
     if(!cart) return rejectWithValue('Cart not loaded');
-    const cartId = cart.id;
-    if (!cartId) return rejectWithValue('Cart ID missing');
+    if (!cart.id) return rejectWithValue('Cart ID missing');
 
     const prevProducts = cart.products ?? [];
 
@@ -46,11 +54,19 @@ export const updateCartItem = createAsyncThunk<
 
     const products = Array.from(map.entries()).map(([id, quantity]) => ({id, quantity}));
 
-    const updatedCart = await updateCart(cartId, {merge: false, products});
+    const updatedCart = await updateCart(cart.id, {merge: false, products});
 
     return updatedCart;
-  } catch (error: any) {
-    return rejectWithValue(error?.message ?? "Update cart failed");;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(error.message);
+    }
+
+    if (error instanceof Error) {
+      return rejectWithValue(error.message);
+    }
+
+    return rejectWithValue('Update cart failed');
   }
 },
 {condition: ({productId}, {getState}) => {
