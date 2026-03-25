@@ -6,6 +6,34 @@ import axios from "axios";
 import type { User } from "models/User";
 import type { RootState } from "store/store";
 
+type UpdateCartItemArgs ={
+  productId: number;
+  nextQty: number;
+};
+
+const buildUpdatedProducts = (
+  prevProducts: Array<{id: number; quantity: number}>,
+  productId: number,
+  nextQty: number,
+) => {
+  const map = new Map<number, number> ();
+
+  prevProducts.forEach((product) => {
+    map.set(product.id, product.quantity ?? 0);
+  });
+
+  if (nextQty <= 0) {
+    map.delete(productId);
+  } else {
+    map.set(productId, nextQty);
+  }
+
+  return Array.from(map.entries()).map(([id, quantity]) => ({
+    id,
+    quantity,
+  }));
+};
+
 export const fetchCartsByUser = createAsyncThunk<
   CartsData,
   { id: number },
@@ -27,11 +55,6 @@ export const fetchCartsByUser = createAsyncThunk<
   }
 });
 
-type UpdateCartItemArgs ={
-  productId: number;
-  nextQty: number;
-};
-
 export const updateCartItem = createAsyncThunk<
   User,
   UpdateCartItemArgs,
@@ -45,14 +68,7 @@ export const updateCartItem = createAsyncThunk<
     if (!cart.id) return rejectWithValue('Cart ID missing');
 
     const prevProducts = cart.products ?? [];
-
-    const map = new Map<number, number>();
-    prevProducts.forEach(p => map.set(p.id, p.quantity ?? 0));
-
-    if (nextQty <= 0) map.delete(productId);
-    else map.set(productId, nextQty);
-
-    const products = Array.from(map.entries()).map(([id, quantity]) => ({id, quantity}));
+    const products = buildUpdatedProducts(prevProducts, productId, nextQty);
 
     const updatedCart = await updateCart(cart.id, {merge: false, products});
 
