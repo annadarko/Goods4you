@@ -7,6 +7,7 @@ import { authApi, useLoginUserMutation } from 'api/authApi'
 import { useAppDispatch } from 'hooks/redux'
 import { useNavigate } from 'react-router-dom'
 import loading from 'image/shopping_cart/loading.svg'
+import { ROUTES } from 'utils/routes'
 
 
 export const Authorization = () => {
@@ -22,7 +23,7 @@ export const Authorization = () => {
             const user = await loginUser({username, password}).unwrap();
             localStorage.setItem('token', user.accessToken);
             dispatch(authApi.util.invalidateTags(['Me']));
-            navigate('/');
+            navigate(ROUTES.home);
         } catch (e) {
 
         }

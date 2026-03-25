@@ -5,6 +5,7 @@ import cl from './AuthGate.module.css'
 import { useAppDispatch } from "hooks/redux";
 import { useEffect, useRef } from "react";
 import { fetchCartsByUser } from "store/reducers/actionCreators";
+import { ROUTES } from "utils/routes";
 
 
 export const AuthGate: React.FC<{children: React.ReactNode}> = ({children}) => {
@@ -27,7 +28,7 @@ export const AuthGate: React.FC<{children: React.ReactNode}> = ({children}) => {
     }, [me?.id, dispatch]);
 
     if (!token) {
-        return <Navigate to = '/login' replace state={{from: location}} />;
+        return <Navigate to={ROUTES.login} replace state={{from: location}} />;
     }
 
     if (isLoading) {
@@ -40,7 +41,7 @@ export const AuthGate: React.FC<{children: React.ReactNode}> = ({children}) => {
 
     if (isError) {
         localStorage.removeItem('token');
-        return <Navigate to='/login' replace state={{from: location}} />;
+        return <Navigate to={ROUTES.login} replace state={{from: location}} />;
     }
 
     return <>{children}</>

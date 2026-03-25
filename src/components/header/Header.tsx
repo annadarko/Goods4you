@@ -2,6 +2,7 @@ import cl from './Header.module.css';
 import 'style/container.css';
 import { Button } from "components/UI/button";
 import {Link} from 'react-router-dom';
+import { ROUTES } from 'utils/routes';
 
 export const Header = () => {
     return (
@@ -19,7 +20,7 @@ export const Header = () => {
                             and many other products at low prices
                         </p>
                     <div className={cl.btn}>
-                        <Link to="/#Catalog">
+                        <Link to={ROUTES.catalog}>
                             <Button
                                 className={cl.button}
                                 view="text"

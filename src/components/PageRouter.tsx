@@ -5,12 +5,13 @@ import { CartPage } from "./pages/CartPage/CartPage";
 import { NotFound } from "./pages/NotFound";
 import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { AuthGate, PublicOnlyRoute } from "./authorization";
+import { ROUTES } from "utils/routes";
 
 export const PageRouter = () => {
     return (
       <Routes>
         <Route
-          path="/login"
+          path={ROUTES.login}
           element={
             <PublicOnlyRoute>
               <LoginPage />
@@ -19,7 +20,7 @@ export const PageRouter = () => {
         />
   
         <Route
-          path="/"
+          path={ROUTES.home}
           element={
             <AuthGate>
               <Home />
@@ -27,7 +28,7 @@ export const PageRouter = () => {
           }
         />
         <Route
-          path="/product/:id"
+          path={ROUTES.product}
           element={
             <AuthGate>
               <ProductPage />
@@ -35,7 +36,7 @@ export const PageRouter = () => {
           }
         />
         <Route
-          path="/cart"
+          path={ROUTES.cart}
           element={
             <AuthGate>
               <CartPage />

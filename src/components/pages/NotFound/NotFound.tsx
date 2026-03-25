@@ -4,6 +4,7 @@ import { NavBar } from 'components/UI/NavBar'
 import cl from './NotFound.module.css'
 import 'style/container.css'
 import { Button } from 'components/UI/button'
+import { ROUTES } from 'utils/routes'
 
 export const NotFound = () => {
     return (
@@ -16,7 +17,7 @@ export const NotFound = () => {
                             404
                         </h1>
                         <p className={cl.text}> PAGE NOT FOUND</p>
-                        <Link to='/'>
+                        <Link to={ROUTES.home}>
                             <Button
                                 className={cl.button}
                                 view="text"

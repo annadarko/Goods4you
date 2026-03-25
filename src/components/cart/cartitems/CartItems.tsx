@@ -7,6 +7,7 @@ import { Button } from 'components/UI/button';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { selectIsCartUpdatingById } from 'store/reducers/userSlice';
 import { updateCartItem } from 'store/reducers/actionCreators';
+import { getProductRoute } from 'utils/routes';
 
 interface CartItemProps {
   id: number;
@@ -40,7 +41,7 @@ export const CartItem: React.FC<CartItemProps> = ({
     <div className={`${cl.item} ${quantity===0 ? cl.itemDisabled : ''}`}>
       <img src={thumbnail} alt={title} />
       <div className={cl.description}>
-        <Link to={`/product/${id}`} className={cl.text}>{title}</Link>
+        <Link to={getProductRoute(id)} className={cl.text}>{title}</Link>
         <p className={cl.price}>${calcDiscounted(price, discountPercentage)}</p>
       </div>
 

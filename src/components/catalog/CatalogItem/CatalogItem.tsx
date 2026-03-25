@@ -8,6 +8,7 @@ import { calcDiscounted } from 'utils/price'
 import { useAppDispatch, useAppSelector } from 'hooks/redux'
 import { selectFirstCart, selectIsCartUpdatingById } from 'store/reducers/userSlice'
 import { updateCartItem } from 'store/reducers/actionCreators'
+import { getProductRoute } from 'utils/routes'
 
 
 interface CatalogItemProps {
@@ -47,7 +48,7 @@ export const CatalogItem:  React.FC<CatalogItemProps> = ({ id, title, price, dis
 
   return (
     <div className={cl.item}>
-      <Link className={cl.itemImg} to={`/product/${id}`}>
+      <Link className={cl.itemImg} to={getProductRoute(id)}>
         <div className={cl.imgBox}>
           {!imgLoaded && !imgError && <div className={cl.imgSkeleton} />}
           {imgError && <div className={cl.imgFallback}>No image</div>}
@@ -70,7 +71,7 @@ export const CatalogItem:  React.FC<CatalogItemProps> = ({ id, title, price, dis
       </Link>
       <div className={cl.itemContent}>
         <div className={cl.contentInfo}>
-          <Link className={cl.contentTitle} to={`/product/${id}`}>
+          <Link className={cl.contentTitle} to={getProductRoute(id)}>
             {title}
           </Link>
           <p className={cl.contentPrice}>${discounted}</p>

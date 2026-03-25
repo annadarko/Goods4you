@@ -6,6 +6,7 @@ import { useBurger } from 'hooks/useBurger';
 import { useAppSelector } from 'hooks/redux';
 import { selectCartTotalQuantity, selectShowBadge } from 'store/reducers/userSlice';
 import { useGetCurrentUserQuery } from 'api/authApi';
+import { ROUTES } from 'utils/routes';
 
 export const NavBar = () => {
 
@@ -23,7 +24,7 @@ export const NavBar = () => {
         <div className="container">
             <div className={cl.content}>
                 <div className={cl.logo}>
-                    <Link to="/">Goods4you</Link>
+                    <Link to={ROUTES.home}>Goods4you</Link>
                 </div>
                     <button className={cl.burger} onClick={toggle} aria-expanded={open}>
                         <span/><span/><span/>
@@ -31,13 +32,13 @@ export const NavBar = () => {
                 <div className={`${cl.items} ${open ? cl.open : ""}`}>
                     <ul>
                         <li className={cl.item}>
-                            <Link to="/#Catalog" onClick={closeMenu}>Catalog</Link>
+                            <Link to={ROUTES.catalog} onClick={closeMenu}>Catalog</Link>
                         </li>
                         <li className={cl.item}>
-                            <Link to="/#FAQ" onClick={closeMenu}>FAQ</Link>
+                            <Link to={ROUTES.faq} onClick={closeMenu}>FAQ</Link>
                         </li>
                         <li className={cl.item}>
-                            <Link to="/cart" onClick={closeMenu}>
+                            <Link to={ROUTES.cart} onClick={closeMenu}>
                                 <span>Cart</span>
                                     <span className={cl.iconWrap}>
                                     <img className={cl.shoppingImg} src = {shopping_cart} alt="" />
