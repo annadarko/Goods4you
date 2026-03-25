@@ -1,0 +1,11 @@
+.header {
+    padding: 23px 0;
+    background: var(--bg-color);
+}
+
+.link {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 44px;
+    color: var(--main-color);
+}

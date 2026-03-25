@@ -3,11 +3,12 @@ import cl from './CatalogItem.module.css'
 import icon from 'image/shopping_cart/Vector.svg'
 import { Button } from 'components/UI/button'
 import { Counter } from 'components/UI/counter'
-import { useQuantity } from 'hooks/useQuantity'
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState } from "react";
 import { calcDiscounted } from 'utils/price'
-import { useAppSelector } from 'hooks/redux'
-import { selectFirstCart } from 'store/reducers/userSlice'
+import { useAppDispatch, useAppSelector } from 'hooks/redux'
+import { selectFirstCart, selectIsCartUpdatingById } from 'store/reducers/userSlice'
+import { updateCartItem } from 'store/reducers/actionCreators'
+import { getProductRoute } from 'utils/routes'
 
 
 interface CatalogItemProps {
@@ -16,37 +17,29 @@ interface CatalogItemProps {
   price: number;
   discountPercentage: number;
   thumbnail: string;
+  stock: number;
 }
 
-export const CatalogItem:  React.FC<CatalogItemProps> = ({ id, title, price, discountPercentage, thumbnail }) => {
+export const CatalogItem:  React.FC<CatalogItemProps> = ({ id, title, price, discountPercentage, thumbnail, stock }) => {
+  const dispatch = useAppDispatch();
+  
   const cart = useAppSelector(selectFirstCart);
-  const productInCart = cart?.products.find(p => p.id === id);
-  const cartQty = productInCart?.quantity ?? 0;
-
-  const [showCounter, setShowCounter] = useState(cartQty>0);
-  const { quantity, increaseQuantity, decreaseQuantity } = useQuantity(() =>
-    setShowCounter(false),
-    cartQty,
-  );
-
-  useEffect(() => {
-    if (cartQty>0) {
-      setShowCounter(true);
-    }
-  }, [cartQty]);
+  const cartQty = cart?.products.find(p => p.id === id)?.quantity ?? 0;
+  const isUpdating = useAppSelector((s) => selectIsCartUpdatingById(s, id));
+  const showCounter = cartQty > 0;
+  const canIncrease = cartQty < stock;
+  const canDecrease = cartQty > 0;
 
   const handlCounterChange = useCallback ((next: number) => {
-    if (next > quantity) {
-      increaseQuantity();
-    } else {
-      decreaseQuantity();
-    }
-  }, [quantity, increaseQuantity, decreaseQuantity]);
+    if (isUpdating) return;
+    if (next > stock) return;
+    dispatch(updateCartItem({ productId: id, nextQty: next }));
+  }, [dispatch, id, isUpdating, stock]);
 
   const handleAddClick = useCallback(()=> {
-    setShowCounter (true);
-    increaseQuantity();
-  }, [increaseQuantity]);
+    if (isUpdating) return;
+    dispatch(updateCartItem({ productId: id, nextQty: 1 }));
+  }, [dispatch, id, isUpdating, canIncrease]);
 
   const [imgLoaded, setImgLoaded] = useState(false);
   const [imgError, setImgError] = useState(false);
@@ -55,7 +48,7 @@ export const CatalogItem:  React.FC<CatalogItemProps> = ({ id, title, price, dis
 
   return (
     <div className={cl.item}>
-      <Link className={cl.itemImg} to={`/product/${id}`}>
+      <Link className={cl.itemImg} to={getProductRoute(id)}>
         <div className={cl.imgBox}>
           {!imgLoaded && !imgError && <div className={cl.imgSkeleton} />}
           {imgError && <div className={cl.imgFallback}>No image</div>}
@@ -78,7 +71,7 @@ export const CatalogItem:  React.FC<CatalogItemProps> = ({ id, title, price, dis
       </Link>
       <div className={cl.itemContent}>
         <div className={cl.contentInfo}>
-          <Link className={cl.contentTitle} to={`/product/${id}`}>
+          <Link className={cl.contentTitle} to={getProductRoute(id)}>
             {title}
           </Link>
           <p className={cl.contentPrice}>${discounted}</p>
@@ -86,8 +79,10 @@ export const CatalogItem:  React.FC<CatalogItemProps> = ({ id, title, price, dis
         {showCounter ? (
           <Counter
             size="medium"
-            value={quantity}
+            value={cartQty}
             onChange={handlCounterChange}
+            disablePlus = {!canIncrease || isUpdating} 
+            disableMinus = {!canDecrease || isUpdating}
           />
         ) : (
           <Button
@@ -95,6 +90,7 @@ export const CatalogItem:  React.FC<CatalogItemProps> = ({ id, title, price, dis
             view="icon"
             size="small"
             onClick={handleAddClick}
+            disabled={isUpdating || !canIncrease}
           >
             <img src={icon} className={cl.icon} alt="Cart" />
           </Button>

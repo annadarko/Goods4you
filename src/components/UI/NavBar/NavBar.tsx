@@ -3,36 +3,28 @@ import 'style/container.css';
 import { Link } from 'react-router-dom';
 import shopping_cart from 'image/shopping_cart/Vector.svg';
 import { useBurger } from 'hooks/useBurger';
-import { useRef, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { fetchCartsByUser } from 'store/reducers/actionCreators';
+import { useAppSelector } from 'hooks/redux';
 import { selectCartTotalQuantity, selectShowBadge } from 'store/reducers/userSlice';
+import { useGetCurrentUserQuery } from 'api/authApi';
+import { ROUTES } from 'utils/routes';
 
 export const NavBar = () => {
 
     const { open, toggle, closeMenu } = useBurger();
-    const dispatch = useAppDispatch();
 
-    const didFetchRef = useRef (false);
-
-    useEffect(() => {
-        if (didFetchRef.current) return;
-        didFetchRef.current = true;
-        dispatch(fetchCartsByUser({ id: 87 }));
-        // dispatch(fetchCartsByUser({ id: 1 })); // empty cart
-    }, [dispatch]);
+    const token = localStorage.getItem('token');
+    const {data: me} = useGetCurrentUserQuery(undefined, {skip: !token});
+    const fullName = me? `${me.firstName} ${me.lastName}` : '';
 
     const totalQty = useAppSelector(selectCartTotalQuantity);
     const showBadge = useAppSelector(selectShowBadge);
-
-    const username = 'Johnson Smith';
 
     return (
         <div className={cl.navbar}>
         <div className="container">
             <div className={cl.content}>
                 <div className={cl.logo}>
-                    <Link to="/">Goods4you</Link>
+                    <Link to={ROUTES.home}>Goods4you</Link>
                 </div>
                     <button className={cl.burger} onClick={toggle} aria-expanded={open}>
                         <span/><span/><span/>
@@ -40,13 +32,13 @@ export const NavBar = () => {
                 <div className={`${cl.items} ${open ? cl.open : ""}`}>
                     <ul>
                         <li className={cl.item}>
-                            <Link to="/#Catalog" onClick={closeMenu}>Catalog</Link>
+                            <Link to={ROUTES.catalog} onClick={closeMenu}>Catalog</Link>
                         </li>
                         <li className={cl.item}>
-                            <Link to="/#FAQ" onClick={closeMenu}>FAQ</Link>
+                            <Link to={ROUTES.faq} onClick={closeMenu}>FAQ</Link>
                         </li>
                         <li className={cl.item}>
-                            <Link to="/cart" onClick={closeMenu}>
+                            <Link to={ROUTES.cart} onClick={closeMenu}>
                                 <span>Cart</span>
                                     <span className={cl.iconWrap}>
                                     <img className={cl.shoppingImg} src = {shopping_cart} alt="" />
@@ -57,7 +49,7 @@ export const NavBar = () => {
                             </Link>
                         </li>
                         <li className={cl.item}>
-                            <Link to="#" onClick={closeMenu}>{username}</Link>
+                            <Link to="#" onClick={closeMenu}>{fullName}</Link>
                         </li>
                     </ul>
                 </div>

@@ -4,10 +4,11 @@ import { Button } from 'components/UI/button'
 import { Counter } from "components/UI/counter";
 import type { Product } from "models/Product";
 import { calcDiscounted } from "utils/price";
-import { useAppSelector } from "hooks/redux";
-import { selectFirstCart } from "store/reducers/userSlice";
-import { useQuantity } from "hooks/useQuantity";
+import { useAppDispatch, useAppSelector } from "hooks/redux";
+import { selectFirstCart, selectIsCartUpdatingById } from "store/reducers/userSlice";
+//import { useQuantity } from "hooks/useQuantity";
 import { useMemo, useState, useEffect, useCallback } from "react";
+import { updateCartItem } from 'store/reducers/actionCreators';
 
 type Props = { product: Product };
 
@@ -28,34 +29,42 @@ export const ProductContent: React.FC<Props> = ({ product }) => {
   const {price, discountPercentage} = product;
   const discounted = calcDiscounted(price, discountPercentage);
 
+  const dispatch = useAppDispatch();
+
   const cart = useAppSelector(selectFirstCart);
-  const productInCart = cart?.products.find((p) => p.id === product.id);
-  const cartQty = productInCart?.quantity ?? 0;
+  const isUpdating = useAppSelector((s) => selectIsCartUpdatingById(s, product.id));
+  //const productInCart = cart?.products.find((p) => p.id === product.id);
+  const cartQty = cart?.products.find(p => p.id === product.id)?.quantity ?? 0;
 
-  const [showCounter, setShowCounter] = useState(cartQty > 0);
+  //const [showCounter, setShowCounter] = useState(cartQty > 0);
+  const showCounter = cartQty > 0;
 
-  const { quantity, increaseQuantity, decreaseQuantity } = useQuantity(
-    () => setShowCounter(false),
-    cartQty
-  );
+  // const { quantity, increaseQuantity, decreaseQuantity } = useQuantity(
+  //   () => setShowCounter(false),
+  //   cartQty
+  // );
 
-  useEffect(() => {
-    if (cartQty > 0) setShowCounter(true);
-    if (cartQty === 0) setShowCounter(false);
-  }, [cartQty]);
+  // useEffect(() => {
+  //   if (cartQty > 0) setShowCounter(true);
+  //   if (cartQty === 0) setShowCounter(false);
+  // }, [cartQty]);
 
-  const handleCounterChange = useCallback(
-    (next: number) => {
-      if (next > quantity) increaseQuantity();
-      else decreaseQuantity();
-    },
-    [quantity, increaseQuantity, decreaseQuantity]
+  const handleCounterChange = useCallback((next: number) => {
+      if (isUpdating) return;
+      dispatch(updateCartItem({ productId: product.id, nextQty: next }));
+    },[dispatch, isUpdating, product.id]
   );
 
   const handleAddClick = useCallback(() => {
-    setShowCounter(true);
-    increaseQuantity();
-  }, [increaseQuantity]);
+      if (isUpdating) return;
+      dispatch(updateCartItem({ productId: product.id, nextQty: 1 }));
+    }, [dispatch, isUpdating, product.id]
+);
+
+  const stock = product.stock ?? 0;
+
+  const canIncrease = cartQty < stock;
+  const canDecrease = cartQty > 0; 
 
   return (
     <div className="container">
@@ -128,10 +137,22 @@ export const ProductContent: React.FC<Props> = ({ product }) => {
             </div>
 
             {showCounter ? (
-              <Counter size="medium" value={quantity} onChange={handleCounterChange} />
+              <Counter 
+                size="medium" 
+                value={cartQty} 
+                onChange={handleCounterChange}
+                disablePlus={!canIncrease || isUpdating}
+                disableMinus={!canDecrease || isUpdating}
+              />
             ) : (
-                <Button className={cl.btn} view="text" size="big" onClick={handleAddClick}>
-                    Add to cart
+                <Button 
+                  className={cl.btn} 
+                  view="text" 
+                  size="big" 
+                  onClick={handleAddClick} 
+                  disabled={isUpdating || stock <= 0}
+                >
+                  Add to cart
                 </Button>
             )}
           </div>
